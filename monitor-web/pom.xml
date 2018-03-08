@@ -11,5 +11,13 @@
 
     <artifactId>monitor-web</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.monitor</groupId>
+            <artifactId>monitor-common</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

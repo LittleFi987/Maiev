@@ -27,18 +27,17 @@ public class EasyLogger implements ILog {
     }
 
     private String replaceParam(String message, Object... parameters) {
-        int startSize = 0;
-        int parametersIndex = 0;
-        int index;
-        String tmpMessage = message;
-        while ((index = message.indexOf("{}", startSize)) != -1) {
-            if (parametersIndex >= parameters.length) {
-                break;
-            }
-            tmpMessage = tmpMessage.replaceFirst("\\{\\}", Matcher.quoteReplacement(String.valueOf(parameters[parametersIndex++])));
-            startSize = index + 2;
+        StringBuilder stringBuilder = null;
+        int paramentIndex = 0;
+        while (message.indexOf("{}") > 0) {
+            stringBuilder = new StringBuilder();
+            stringBuilder.append(message.substring(0, message.indexOf("{}")));
+            stringBuilder.append(parameters[paramentIndex]);
+            stringBuilder.append(message.substring(message.indexOf("{}") + 2, message.length()));
+            message = stringBuilder.toString();
+            paramentIndex ++;
         }
-        return tmpMessage;
+        return message;
     }
 
 
@@ -81,6 +80,13 @@ public class EasyLogger implements ILog {
     public void warn(String format, Object... arguments) {
         if (isWarnEnable())
             logger(LogLevel.WARN, replaceParam(format, arguments), null);
+    }
+
+    @Override
+    public void error(String format, Object... arguments) {
+        if (isErrorEnable()) {
+            logger(LogLevel.ERROR, replaceParam(format, arguments), null);
+        }
     }
 
     @Override

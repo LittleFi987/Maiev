@@ -9,12 +9,20 @@ import java.io.File;
  */
 public class FindPathTest {
 
-    public static final ILog log = LogManager.getLogger(FindPathTest.class);
+//    public static final ILog log = LogManager.getLogger(FindPathTest.class);
 
     public static void main(String[] args) {
         // file:/Users/chenhaoye/IdeaProjects/monitor/monitor-core/target/classes/
-        File path = AgentPackagePath.getPath();
-        log.info("aaa");
+//        File path = AgentPackagePath.getPath();
+//        log.info("aaa");
+
+
+        String classResourcePath = FindPathTest.class.getName().replaceAll("\\.", "/") + ".class";
+
+        String resource = FindPathTest.class.getClassLoader().getResource(classResourcePath).toString();
+
+        System.out.println(classResourcePath);
+        System.out.println(resource);
     }
 
 }

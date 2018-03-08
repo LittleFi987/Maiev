@@ -52,6 +52,7 @@ public class FileWriter implements IWriter, EventHandler<LogMessageHolder> {
         disruptor.start();
     }
 
+    @Override
     public void onEvent(LogMessageHolder event, long sequence, boolean endOfBatch) throws Exception {
         if (hasWriteStream()) {
             try {

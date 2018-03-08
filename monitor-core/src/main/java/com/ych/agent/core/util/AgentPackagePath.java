@@ -28,10 +28,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * @author wusheng
+ * @author chenhao.ye
  */
 public class AgentPackagePath {
     private static final ILog logger = LogManager.getLogger(AgentPackagePath.class);
+
+    static {
+        AGENT_PACKAGE_PATH = findPath();
+    }
 
     private static File AGENT_PACKAGE_PATH;
 

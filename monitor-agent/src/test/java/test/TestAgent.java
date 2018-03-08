@@ -10,7 +10,6 @@ public class TestAgent {
 //            Thread.sleep(1000);
             TestAgent testAgent = new TestAgent();
             testAgent.test();
-            testAgent = null;
 //            Thread.sleep(3000);
             Demo demo = new Demo();
 //        }

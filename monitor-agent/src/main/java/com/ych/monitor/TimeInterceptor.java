@@ -14,12 +14,13 @@ public class TimeInterceptor {
     @RuntimeType
     public static Object intercept(@Origin Method method,
                                    @SuperCall Callable<?> callable) throws Exception {
-        long start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
         try {
             // 原有函数执行
+            String name = callable.getClass().getName();
             return callable.call();
         } finally {
-            System.out.println(method + ": took " + (System.currentTimeMillis() - start) + "ms");
+//            System.out.println(method + ": took " + (System.currentTimeMillis() - start) + "ms");
         }
     }
 }

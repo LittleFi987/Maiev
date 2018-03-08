@@ -1,10 +1,2 @@
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/Agent.java
-/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/ClassPathResolver.java
-/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collect/Collector.java
-/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/model/BaseHeart.java
-/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/model/TransferData.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/TimeInterceptor.java
-/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collect/NettyCollector.java
-/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/interceptor/Interceptor.java
-/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/trans/Transfer.java
-/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/model/BaseData.java
