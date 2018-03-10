@@ -2,9 +2,10 @@ package com.ych.core.mapper;
 
 import com.ych.core.model.MonitorDetail;
 import com.ych.core.model.MonitorDetailExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
 
 public interface MonitorDetailMapper {
     /**

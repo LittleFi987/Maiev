@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <classPathEntry location="/Users/chenhaoye/.m2/repository/mysql/mysql-connector-java/5.1.20/mysql-connector-java-5.1.20.jar"/>
+    <!-- 选择core模块， 执行maven命令 mybatis-generator:generate 自动生成相应文件  -->
+    <context id="context">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/monitor?characterEncoding=UTF8"
+                        userId="root"
+                        password="123456"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.ych.core.model" targetProject="src/main/java"></javaModelGenerator>
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"></sqlMapGenerator>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ych.core.mapper"
+                             targetProject="src/main/java"></javaClientGenerator>
+
+        <table tableName="alarm_record">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="user_id" javaType="java.lang.Integer"/>
+            <columnOverride column="read_flag" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="alarm_set">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="user_id" javaType="java.lang.Integer"/>
+            <columnOverride column="time_threshold" javaType="java.lang.Integer"/>
+            <columnOverride column="qps_threshold" javaType="java.lang.Integer"/>
+            <columnOverride column="monitor_item_id" javaType="java.lang.Integer"/>
+            <columnOverride column="group_id" javaType="java.lang.Integer"/>
+            <columnOverride column="user_id" javaType="java.lang.Integer"/>
+            <columnOverride column="delete_flag" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="user">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="delete_flag" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="monitor_detail">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="request_count" javaType="java.lang.Integer"/>
+            <columnOverride column="request_time" javaType="java.lang.Long"/>
+            <columnOverride column="avg_time" javaType="java.lang.Long"/>
+            <columnOverride column="monitor_item_id" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="monitor_group">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="project_id" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="monitor_group_item">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="monitor_item_id" javaType="java.lang.Integer"/>
+            <columnOverride column="group_id" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="monitor_item">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="project_id" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="monitor_project">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="user_id" javaType="java.lang.Integer"/>
+            <columnOverride column="project_status" javaType="java.lang.Integer"/>
+            <columnOverride column="delete_flag" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="monitor_project_url">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="project_id" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="monitor_project_user">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="user_id" javaType="java.lang.Integer"/>
+        </table>
+        <table tableName="monitor_summary">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="max_request_time" javaType="java.lang.Long"/>
+            <columnOverride column="total_request_time" javaType="java.lang.Long"/>
+            <columnOverride column="request_count" javaType="java.lang.Integer"/>
+            <columnOverride column="project_id" javaType="java.lang.Integer"/>
+            <columnOverride column="handle_flag" javaType="java.lang.Integer"/>
+        </table>
+
+    </context>
+</generatorConfiguration>
