@@ -1,5 +1,6 @@
 package com.ych.core.service;
 
+import com.ych.core.enums.UserStatus;
 import com.ych.core.model.User;
 
 /**
@@ -9,4 +10,5 @@ public interface UserService {
 
     void create(User user);
 
+    User findByName(String userName, UserStatus userStatus);
 }
