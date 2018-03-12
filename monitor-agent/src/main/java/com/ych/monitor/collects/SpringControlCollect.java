@@ -3,18 +3,17 @@ package com.ych.monitor.collects;
 import com.ych.monitor.AbstractCollectors;
 import com.ych.monitor.AgentLoader;
 import com.ych.monitor.Collect;
-import com.ych.monitor.bean.ServiceStatistics;
 import com.ych.monitor.bean.Statistics;
+import com.ych.monitor.bean.WebStatistics;
 import javassist.CtClass;
 import javassist.CtMethod;
-import javassist.Modifier;
 
 /**
- * Created by chenhao.ye on 11/03/2018.
+ * Created by chenhao.ye on 12/03/2018.
  */
-public class SpringServiceCollect extends AbstractCollectors implements Collect {
+public class SpringControlCollect extends AbstractCollectors implements Collect {
 
-    public static final SpringServiceCollect INSTANCE = new SpringServiceCollect();
+    public static SpringControlCollect INSTANCE = new SpringControlCollect();
 
     private static String beginSrc;
 
@@ -24,8 +23,9 @@ public class SpringServiceCollect extends AbstractCollectors implements Collect 
 
     static {
         StringBuilder sBuilder = new StringBuilder();
-        sBuilder.append("com.ych.monitor.collects.SpringServiceCollect instance = com.ych.monitor.collects.SpringServiceCollect.INSTANCE;");
-        sBuilder.append("com.ych.monitor.bean.ServiceStatistics statics = instance.begin(\"%s\",\"%s\");");
+        sBuilder.append("com.ych.monitor.collects.SpringControlCollect instance = com.ych.monitor.collects.SpringControlCollect.INSTANCE;");
+        sBuilder.append("com.ych.monitor.bean.WebStatistics statics = (com.ych.monitor.bean.WebStatistics)instance.begin(\"%s\",\"%s\");");
+        sBuilder.append("statics.setUrlAddress(\"%s\");");
         beginSrc = sBuilder.toString();
 
         sBuilder = new StringBuilder();
@@ -38,32 +38,37 @@ public class SpringServiceCollect extends AbstractCollectors implements Collect 
     }
 
 
+
     @Override
     public boolean isTarget(String className, ClassLoader classLoader, CtClass ctClass) {
         try {
             for (Object o : ctClass.getAnnotations()) {
-                if (o.toString().startsWith("@org.springframework.stereotype.Service")) {
+                if (o.toString().startsWith("@org.springframework.stereotype.Controller")) {
                     return true;
                 }
             }
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+
         }
         return false;
     }
-
 
     @Override
     public byte[] transform(ClassLoader loader, String className, byte[] classfileBuffer, CtClass ctClass) throws Exception {
         AgentLoader agentLoader = new AgentLoader(className, loader, ctClass);
         for (CtMethod ctMethod : ctClass.getDeclaredMethods()) {
-            // 过滤插装方法
+            String requestUrl;
+            // 过滤插桩方法
             if (!verifyMethod(ctMethod)) {
                 continue;
             }
 
+            requestUrl = getRequestMappingValue(ctMethod);
+            if (requestUrl == null) {
+                continue;
+            }
             AgentLoader.MthodSrcBuild build = new AgentLoader.MthodSrcBuild();
-            build.setBeginSrc(String.format(beginSrc, className, ctMethod.getName()));
+            build.setBeginSrc(String.format(beginSrc, className, ctMethod.getName(), requestUrl));
             build.setEndSrc(endSrc);
             build.setErrorSrc(errorSrc);
 
@@ -72,15 +77,13 @@ public class SpringServiceCollect extends AbstractCollectors implements Collect 
         return agentLoader.toBytecode();
     }
 
+
     @Override
     public Statistics begin(String className, String method) {
-        ServiceStatistics statistics = new ServiceStatistics(super.begin(className, method));
-        statistics.setServiceName(className);
-        statistics.setMethodName(method);
-        statistics.setLogType("service");
+        WebStatistics statistics = new WebStatistics(super.begin(className, method));
+        statistics.setLogType("control");
         return statistics;
     }
-
 
     @Override
     public void end(Statistics statistics) {
@@ -92,4 +95,14 @@ public class SpringServiceCollect extends AbstractCollectors implements Collect 
 
     }
 
+
+    private String getRequestMappingValue(CtMethod method) throws ClassNotFoundException {
+        for (Object o : method.getAnnotations()) {
+           if (o.toString().startsWith("@org.springframework.web.bind.annotation.RequestMapping")) {
+               String val = getAnnotationValue("value", o.toString());
+               return val == null ? "/" : val;
+           }
+        }
+        return null;
+    }
 }

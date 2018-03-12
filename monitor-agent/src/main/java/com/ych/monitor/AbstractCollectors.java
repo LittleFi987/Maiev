@@ -1,5 +1,9 @@
 package com.ych.monitor;
 
+import com.ych.monitor.bean.Statistics;
+import javassist.CtMethod;
+import javassist.Modifier;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.*;
 import java.util.regex.Matcher;
@@ -38,6 +42,7 @@ public abstract class AbstractCollectors {
         statistics.end = System.currentTimeMillis();
         statistics.userTime = statistics.getEnd() - statistics.getBegin();
         // 发送数据
+        System.out.println(statistics.toString());
     }
 
     public void error(Statistics statistics, Throwable throwable) {
@@ -64,123 +69,30 @@ public abstract class AbstractCollectors {
         // 发送监控数据
     }
 
+    protected Boolean verifyMethod(CtMethod ctMethod) {
+        // 屏蔽非公共方法
+        if (!Modifier.isPublic(ctMethod.getModifiers())) {
+            return false;
+        }
+        // 屏蔽静态方法
+        if (Modifier.isNative(ctMethod.getModifiers())) {
+            return false;
+        }
+        // 屏蔽本地方法
+        if (Modifier.isStatic(ctMethod.getModifiers())) {
+            return false;
+        }
+        return true;
+    }
 
-    public static String getAnnotationValue(String key, String annotationDesc) {
+    protected static String getAnnotationValue(String key, String annotationDesc) {
         String regex = String.format("value=\\{\".*\"\\}");
         Pattern compile = Pattern.compile(regex);
         Matcher matcher = compile.matcher(annotationDesc);
         if (matcher.find()) {
-            return matcher.group().substring(key.length() + 3, matcher.group().length());
+            return matcher.group().substring(key.length() + 3, matcher.group().length() - 2);
         }
         return null;
     }
 
-
-    public static class Statistics {
-        public Long begin;
-
-        public Long end;
-
-        public Long userTime;
-
-        public String errorMsg;
-
-        public String errorType;
-
-        public Long createTime;
-
-        public String keyId;
-
-        public String ip;
-
-        public String logType;
-
-        public Statistics() {
-        }
-
-        public Statistics(Statistics statistics) {
-            this.setBegin(statistics.getBegin());
-            this.setCreateTime(statistics.getCreateTime());
-            this.setEnd(statistics.getEnd());
-            this.setErrorMsg(statistics.getErrorMsg());
-            this.setErrorType(statistics.getErrorType());
-            this.setIp(statistics.getIp());
-            this.setKeyId(statistics.getKeyId());
-            this.setLogType(statistics.getLogType());
-            this.setUserTime(statistics.getUserTime());
-        }
-
-
-        public Long getBegin() {
-            return begin;
-        }
-
-        public void setBegin(Long begin) {
-            this.begin = begin;
-        }
-
-        public Long getEnd() {
-            return end;
-        }
-
-        public void setEnd(Long end) {
-            this.end = end;
-        }
-
-        public Long getUserTime() {
-            return userTime;
-        }
-
-        public void setUserTime(Long userTime) {
-            this.userTime = userTime;
-        }
-
-        public String getErrorMsg() {
-            return errorMsg;
-        }
-
-        public void setErrorMsg(String errorMsg) {
-            this.errorMsg = errorMsg;
-        }
-
-        public String getErrorType() {
-            return errorType;
-        }
-
-        public void setErrorType(String errorType) {
-            this.errorType = errorType;
-        }
-
-        public Long getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(Long createTime) {
-            this.createTime = createTime;
-        }
-
-        public String getKeyId() {
-            return keyId;
-        }
-
-        public void setKeyId(String keyId) {
-            this.keyId = keyId;
-        }
-
-        public String getIp() {
-            return ip;
-        }
-
-        public void setIp(String ip) {
-            this.ip = ip;
-        }
-
-        public String getLogType() {
-            return logType;
-        }
-
-        public void setLogType(String logType) {
-            this.logType = logType;
-        }
-    }
 }
