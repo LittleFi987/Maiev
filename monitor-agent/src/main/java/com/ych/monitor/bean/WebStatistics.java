@@ -32,17 +32,18 @@ public class WebStatistics extends Statistics {
     @Override
     public String toString() {
         return "WebStatistics{" +
-                "urlAddress='" + urlAddress + '\'' +
-                ", begin=" + begin +
-                ", interfaceName='" + interfaceName + '\'' +
+                "begin=" + begin +
                 ", end=" + end +
+                ", urlAddress='" + urlAddress + '\'' +
                 ", userTime=" + userTime +
+                ", interfaceName='" + interfaceName + '\'' +
                 ", errorMsg='" + errorMsg + '\'' +
                 ", errorType='" + errorType + '\'' +
                 ", createTime=" + createTime +
                 ", keyId='" + keyId + '\'' +
                 ", ip='" + ip + '\'' +
                 ", logType='" + logType + '\'' +
+                ", methodName='" + methodName + '\'' +
                 '}';
     }
 }

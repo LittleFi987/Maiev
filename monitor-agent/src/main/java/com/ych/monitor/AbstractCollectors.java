@@ -35,6 +35,7 @@ public abstract class AbstractCollectors {
         Statistics statistics = new Statistics();
         statistics.begin = System.currentTimeMillis();
         statistics.createTime = System.currentTimeMillis();
+        statistics.setMethodName(className + "." + method);
         return statistics;
     }
 

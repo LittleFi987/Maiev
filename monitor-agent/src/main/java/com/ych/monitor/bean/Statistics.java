@@ -1,7 +1,5 @@
 package com.ych.monitor.bean;
 
-import com.ych.monitor.AbstractCollectors;
-
 /**
  * Created by chenhao.ye on 12/03/2018.
  */
@@ -24,6 +22,8 @@ public class Statistics {
 
     public String logType;
 
+    public String methodName;
+
     public Statistics() {
     }
 
@@ -37,6 +37,7 @@ public class Statistics {
         this.setKeyId(statistics.getKeyId());
         this.setLogType(statistics.getLogType());
         this.setUserTime(statistics.getUserTime());
+        this.setMethodName(statistics.getMethodName());
     }
 
 
@@ -113,6 +114,13 @@ public class Statistics {
         this.logType = logType;
     }
 
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
 
     @Override
     public String toString() {
@@ -126,6 +134,7 @@ public class Statistics {
                 ", keyId='" + keyId + '\'' +
                 ", ip='" + ip + '\'' +
                 ", logType='" + logType + '\'' +
+                ", methodName='" + methodName + '\'' +
                 '}';
     }
 }
