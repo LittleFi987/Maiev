@@ -16,7 +16,7 @@ public class SpringControlCollectTest {
 
     @Test
     public void collectTarget() throws Exception {
-        String name = "com.test.SpringControlCollectTest$Hello";
+        String name = "com.test.Hello";
         ClassLoader loader = SpringServiceCollectTest.class.getClassLoader();
         ClassPool pool = new ClassPool(true);
         pool.insertClassPath(new LoaderClassPath(loader));
@@ -26,18 +26,18 @@ public class SpringControlCollectTest {
 
 
         Hello hello = new Hello();
-        hello.say();
+        hello.sayHello(1);
     }
 
 
-    @Controller
-    @RequestMapping("/api")
-    public static class Hello {
-        @RequestMapping("/say")
-        public void say() {
-            System.out.println("hello");
-        }
-    }
+//    @Controller
+//    @RequestMapping("/api")
+//    public static class Hello {
+//        @RequestMapping("/say")
+//        public void say() {
+//            System.out.println("hello");
+//        }
+//    }
 
 
 }

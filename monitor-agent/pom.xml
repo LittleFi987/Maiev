@@ -45,6 +45,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -89,6 +90,15 @@
                             <addDefaultImplementationEntries/>
                         </manifest>
                     </archive>
+                    <!--<archive>-->
+                        <!--<manifest>-->
+                            <!--<addclasspath>true</addclasspath>-->
+                            <!--<classpathprefix>lib/</classpathprefix>-->
+                        <!--</manifest>-->
+                        <!--<manifestentries>-->
+                            <!--<premain-class>com.ych.monitor.Agent</premain-class>-->
+                        <!--</manifestentries>-->
+                    <!--</archive>-->
                 </configuration>
             </plugin>
         </plugins>

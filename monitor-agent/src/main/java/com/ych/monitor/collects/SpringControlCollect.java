@@ -97,9 +97,10 @@ public class SpringControlCollect extends AbstractCollectors implements Collect 
 
 
     private String getRequestMappingValue(CtMethod method) throws ClassNotFoundException {
+        String val = "";
         for (Object o : method.getAnnotations()) {
            if (o.toString().startsWith("@org.springframework.web.bind.annotation.RequestMapping")) {
-               String val = getAnnotationValue("value", o.toString());
+               val = val + getAnnotationValue("value", o.toString());
                return val == null ? "/" : val;
            }
         }

@@ -1,7 +1,7 @@
 package com.ych.monitor;
 
 import com.ych.monitor.collects.SpringControlCollect;
-import com.ych.monitor.collects.SpringServiceCollect;
+import javassist.ClassPool;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -25,9 +25,16 @@ public class Agent implements ClassFileTransformer {
 
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-//        collect.transform(loader, className, classfileBuffer, classBeingRedefined.getDeclaringClass());
-        System.out.println("className: " + className);
-        System.out.println("class: " + classBeingRedefined.getName());
+        try {
+            String newClassName = className.replace("/", ".");
+            System.out.println(newClassName);
+            if (collect.isTarget(className, loader, new ClassPool(true).getCtClass(newClassName))) {
+                return collect.transform(loader, className, classfileBuffer, new ClassPool(true).getCtClass(className));
+            }
+        } catch (Exception e) {
+            // ignore
+        }
+//        System.out.println("className: " + newClassName);
         return new byte[0];
     }
 }
