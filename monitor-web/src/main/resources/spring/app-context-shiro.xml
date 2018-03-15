@@ -9,7 +9,7 @@
         <property name="storedCredentialsHexEncoded" value="true"/>
     </bean>
 
-     Realm实现
+     <!--Realm实现-->
     <bean id="userRealm" class="com.ych.gateway.realm.MyShiroRealm">
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
     </bean>

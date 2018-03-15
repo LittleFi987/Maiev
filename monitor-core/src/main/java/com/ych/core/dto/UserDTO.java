@@ -1,5 +1,7 @@
 package com.ych.core.dto;
 
+import com.ych.core.common.CommonResponseEnum;
+import com.ych.core.common.Param;
 import lombok.Data;
 import lombok.ToString;
 
@@ -11,8 +13,8 @@ import java.util.Date;
  */
 @Data
 @ToString
-public class UserDTO implements Serializable {
-    private static final long serialVersionUID = 3666091150901084817L;
+public class UserDTO implements Serializable, Param {
+    private static final long serialVersionUID = 1469170087592640655L;
     private Long id;
 
     private String username;
@@ -31,6 +33,14 @@ public class UserDTO implements Serializable {
 
     private Date updateTime;
 
+
+    @Override
+    public void check() {
+        checkNotEmpty(username, CommonResponseEnum.PARAM_ERROR);
+        checkNotEmpty(nickname, CommonResponseEnum.PARAM_ERROR);
+        checkNotEmpty(pwd, CommonResponseEnum.PARAM_ERROR);
+        checkNotEmpty(email, CommonResponseEnum.PARAM_ERROR);
+    }
 
     /**
      * 密码盐.

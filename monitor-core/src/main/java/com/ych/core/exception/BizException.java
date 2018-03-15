@@ -6,18 +6,18 @@ import com.ych.core.enums.ResponseEnum;
  * Created by chenhao.ye on 10/03/2018.
  */
 public class BizException extends RuntimeException {
-    private ResponseEnum responseEnum;
+    private ResponseEnum status;
 
     public BizException(ResponseEnum status) {
         super();
-        this.responseEnum = status;
+        this.status = status;
     }
 
-    public ResponseEnum getResponseEnum() {
-        return responseEnum;
+    public ResponseEnum getStatus() {
+        return status;
     }
 
-    public void setResponseEnum(ResponseEnum responseEnum) {
-        this.responseEnum = responseEnum;
+    public void setStatus(ResponseEnum status) {
+        this.status = status;
     }
 }
