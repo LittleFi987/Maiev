@@ -13,9 +13,9 @@ import java.util.Date;
  */
 @Data
 @ToString
-public class UserDTO implements Serializable, Param {
+public class UserDto implements Serializable, Param {
     private static final long serialVersionUID = 1469170087592640655L;
-    private Long id;
+    private Integer id;
 
     private String username;
 

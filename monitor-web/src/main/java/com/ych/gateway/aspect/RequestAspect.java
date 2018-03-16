@@ -3,7 +3,6 @@ package com.ych.gateway.aspect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ych.core.common.Param;
 import com.ych.core.common.Response;
-import com.ych.core.exception.BizException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -22,7 +22,7 @@ public interface Param {
 
 
     default void checkArgs(boolean success, ResponseEnum status) {
-        if (!success) {
+        if (success) {
             throw new BizException(status);
         }
     }

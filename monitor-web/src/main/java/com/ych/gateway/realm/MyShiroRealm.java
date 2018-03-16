@@ -1,6 +1,6 @@
 package com.ych.gateway.realm;
 
-import com.ych.core.dto.UserDTO;
+import com.ych.core.dto.UserDto;
 import com.ych.core.enums.UserStatus;
 import com.ych.core.handler.UserHandler;
 import org.apache.shiro.authc.AuthenticationException;
@@ -37,7 +37,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         // 获取用户名
         String userName = (String)authenticationToken.getPrincipal();
-        UserDTO userDTOByName = userHandler.findByName(userName, UserStatus.NORMAL);
+        UserDto userDTOByName = userHandler.findByName(userName, UserStatus.NORMAL);
 
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 userDTOByName.getUsername(), //用户名

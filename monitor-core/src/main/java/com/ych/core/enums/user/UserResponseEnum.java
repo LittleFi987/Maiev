@@ -6,7 +6,8 @@ import com.ych.core.enums.ResponseEnum;
  * Created by chenhao.ye on 10/03/2018.
  */
 public enum UserResponseEnum implements ResponseEnum {
-    USER_NOT_FIND("60000", "用户未找到");
+    USER_NOT_FIND("60000", "用户未找到"),
+    USER_LOGIN_FAIL("60001", "用户登录失败");
 
     UserResponseEnum(String code, String message) {
         this.code = code;

@@ -1,6 +1,6 @@
 package com.ych.core.handler;
 
-import com.ych.core.dto.UserDTO;
+import com.ych.core.dto.UserDto;
 import com.ych.core.enums.UserStatus;
 import com.ych.core.model.User;
 import com.ych.core.service.UserService;
@@ -19,15 +19,15 @@ public class UserHandler {
     private UserService userService;
 
 
-    public void create(UserDTO userDTO) {
+    public void create(UserDto userDTO) {
         User user = new User();
         BeanUtils.copyProperties(userDTO, user);
         userService.create(user);
     }
 
-    public UserDTO findByName(String userName, UserStatus userStatus) {
+    public UserDto findByName(String userName, UserStatus userStatus) {
         User user = userService.findByName(userName, userStatus);
-        UserDTO userDTO = new UserDTO();
+        UserDto userDTO = new UserDto();
         BeanUtils.copyProperties(user, userDTO);
         return userDTO;
     }
