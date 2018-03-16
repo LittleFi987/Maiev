@@ -19,11 +19,10 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ThreadContext;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.security.Key;
 import java.util.Date;
 
 /**
@@ -61,6 +60,10 @@ public class UserController {
         }
     }
 
+    @GetMapping("/api/user/info")
+    public Response getUserInfo() {
+        return Response.success();
+    }
 
 
     @PostMapping("/api/regist")

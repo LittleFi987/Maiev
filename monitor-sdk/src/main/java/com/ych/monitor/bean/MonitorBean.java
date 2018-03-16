@@ -1,5 +1,6 @@
 package com.ych.monitor.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -8,7 +9,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * 监控项
  * Created by Stay on 2017/1/6  22:41.
  */
-public class MonitorBean {
+public class MonitorBean implements Serializable{
+    private static final long serialVersionUID = 8194998659909639294L;
     private String monitorName;
     private AtomicLong maxRequestTime;
     private AtomicLong totalRequestTime;
@@ -131,5 +133,18 @@ public class MonitorBean {
         if (time > this.maxRequestTime.get()) {
             this.maxRequestTime.getAndSet(time);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "MonitorBean{" +
+                "monitorName='" + monitorName + '\'' +
+                ", maxRequestTime=" + maxRequestTime +
+                ", totalRequestTime=" + totalRequestTime +
+                ", requestType='" + requestType + '\'' +
+                ", host='" + host + '\'' +
+                ", date=" + date +
+                ", requestCount=" + requestCount +
+                '}';
     }
 }
