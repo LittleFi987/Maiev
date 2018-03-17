@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by chenhao.ye on 16/03/2018.
@@ -30,7 +31,7 @@ public class ProjectDto implements Serializable, Param {
 
     private Integer deleteFlag;
 
-    private String url;
+    private List<String> urls;
 
     private Date createTime;
 
@@ -39,6 +40,6 @@ public class ProjectDto implements Serializable, Param {
     @Override
     public void check() {
         checkNotEmpty(projectName, CommonResponseEnum.PARAM_ERROR);
-        checkNotEmpty(url, CommonResponseEnum.PARAM_ERROR);
+        checkNotEmpty(urls, CommonResponseEnum.PARAM_ERROR);
     }
 }
