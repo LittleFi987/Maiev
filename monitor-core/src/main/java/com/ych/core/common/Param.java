@@ -3,6 +3,7 @@ package com.ych.core.common;
 
 import com.ych.core.enums.ResponseEnum;
 import com.ych.core.exception.BizException;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -18,6 +19,10 @@ public interface Param {
 
     default void checkNotEmpty(String value, ResponseEnum status) {
         checkArgs(StringUtils.isEmpty(value), status);
+    }
+
+    default void checkNotEmpty(Object value, ResponseEnum status) {
+        checkArgs(ObjectUtils.isEmpty(value), status);
     }
 
 

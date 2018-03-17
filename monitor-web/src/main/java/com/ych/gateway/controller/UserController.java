@@ -12,18 +12,12 @@ import com.ych.gateway.realm.UserToken;
 import com.ych.gateway.util.JWTGenerateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.ExcessiveAttemptsException;
-import org.apache.shiro.authc.ExpiredCredentialsException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ThreadContext;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.security.Key;
-import java.util.Date;
 
 /**
  * Created by chenhao.ye on 14/03/2018.
@@ -54,23 +48,20 @@ public class UserController {
             Subject subject = getSubject();
             subject.login(token);
             subject.logout();
-            return Response.success(JWTGenerateUtils.generateJWT(jwtConfig.getJwtSecret(), userDto.getId().longValue(), jwtConfig.getIssure()));
+            return Response.success(userDto.getId() + "--" + JWTGenerateUtils.generateJWT(jwtConfig.getJwtSecret(), userDto.getId().longValue(), jwtConfig.getIssure()));
         } catch (Exception e) {
             return Response.failed(UserResponseEnum.USER_LOGIN_FAIL);
         }
     }
 
     @GetMapping("/api/user/info")
-    public Response getUserInfo() {
-        return Response.success();
+    public Response getUserInfo(@RequestParam String token) {
+        return Response.success(token);
     }
 
 
     @PostMapping("/api/regist")
     public Response regist(@RequestBody UserDto userDTO) {
-        userDTO.setCreateTime(new Date());
-        userDTO.setUpdateTime(new Date());
-        userDTO.setDeleteFlag(UserStatus.NORMAL.getValue());
         passwordHelper.encryptPassword(userDTO);
         userHandler.create(userDTO);
         return Response.success();
