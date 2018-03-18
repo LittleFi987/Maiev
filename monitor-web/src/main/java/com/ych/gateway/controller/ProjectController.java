@@ -42,8 +42,7 @@ public class ProjectController {
 
     @GetMapping("/api/project")
     public Response getById(@RequestParam Integer id) {
-
-
+        return Response.success();
     }
 
 }

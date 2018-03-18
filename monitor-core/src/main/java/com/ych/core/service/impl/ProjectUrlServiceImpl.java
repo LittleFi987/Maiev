@@ -56,4 +56,10 @@ public class ProjectUrlServiceImpl implements ProjectUrlService {
         example.createCriteria().andProjectIdEqualTo(projectId);
         projectUrlMapper.deleteByExample(example);
     }
+
+    @Override
+    public List<MonitorProjectUrl> listAll() {
+        MonitorProjectUrlExample example = new MonitorProjectUrlExample();
+        return projectUrlMapper.selectByExample(example);
+    }
 }

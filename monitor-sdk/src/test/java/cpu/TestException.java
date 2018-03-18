@@ -1,6 +1,5 @@
 package cpu;
 
-import com.alibaba.fastjson.JSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +29,4 @@ public class TestException {
 //
 //    }
 
-    public static void main(String[] args) {
-        List<String> strList = new ArrayList<>();
-        strList.add("aaa");
-        System.out.println(JSON.toJSONString(strList));
-    }
 }

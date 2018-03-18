@@ -58,13 +58,13 @@ public class MonitorServlet extends HttpServlet {
             strBuilder.append("\"requestType\":");
             strBuilder.append("\"" + monitorBean.getRequestType() + "\",");
             strBuilder.append("\"date\":");
-            strBuilder.append("\"" + monitorBean.getDate().getTime() + "\",");
+            strBuilder.append("" + monitorBean.getDate().getTime() + ",");
             strBuilder.append("\"maxRequestTime\":");
-            strBuilder.append("\"" + monitorBean.getMaxRequestTime() + "\",");
+            strBuilder.append("" + monitorBean.getMaxRequestTime() + ",");
             strBuilder.append("\"requestCount\":");
-            strBuilder.append("\"" + monitorBean.getRequestCount() + "\",");
+            strBuilder.append("" + monitorBean.getRequestCount() + ",");
             strBuilder.append("\"totalRequestTime\":");
-            strBuilder.append("\"" + monitorBean.getTotalRequestTime() + "\"");
+            strBuilder.append("" + monitorBean.getTotalRequestTime() + "");
             strBuilder.append("}");
             if (i == 0) {
                 jsonStr += strBuilder.toString();

@@ -17,4 +17,5 @@ public interface ProjectUrlService {
 
     void deleteByProjectId(Integer projectId);
 
+    List<MonitorProjectUrl> listAll();
 }
