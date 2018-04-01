@@ -4,6 +4,7 @@ com/ych/monitor/Collect.class
 com/ych/monitor/AgentLoader.class
 com/ych/monitor/Agent.class
 com/ych/monitor/bean/WebStatistics.class
+com/ych/monitor/DefaultClassFileTransformer.class
 com/ych/monitor/bean/ServiceStatistics.class
 com/ych/monitor/bean/Statistics.class
 com/ych/monitor/AgentLoader$MthodSrcBuild.class

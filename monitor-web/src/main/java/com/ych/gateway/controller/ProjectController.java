@@ -4,6 +4,7 @@ import com.ych.core.common.Response;
 import com.ych.core.dto.ProjectDto;
 import com.ych.core.handler.ProjectHandler;
 import com.ych.gateway.annotations.CurrentUser;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,7 +21,11 @@ public class ProjectController {
     @PostMapping("/api/project")
     public Response create(@RequestBody ProjectDto projectDto, @CurrentUser Integer userId) {
         projectDto.setUserId(userId);
-        projectHandler.create(projectDto);
+        if (StringUtils.isEmpty(projectDto.getId())) {
+            projectHandler.create(projectDto);
+        } else {
+            projectHandler.update(projectDto);
+        }
         return Response.success();
     }
 
@@ -34,15 +39,11 @@ public class ProjectController {
         return Response.success(projectHandler.listAll());
     }
 
-    @PutMapping("/api/project")
-    public Response update(@RequestBody ProjectDto projectDto) {
-        projectHandler.update(projectDto);
-        return Response.success();
-    }
 
     @GetMapping("/api/project")
     public Response getById(@RequestParam Integer id) {
-        return Response.success();
+        ProjectDto projectDto = projectHandler.getById(id);
+        return Response.success(projectDto);
     }
 
 }

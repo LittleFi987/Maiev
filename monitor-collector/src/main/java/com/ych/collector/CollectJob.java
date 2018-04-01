@@ -2,13 +2,13 @@ package com.ych.collector;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
+import com.ych.alert.Alert;
+import com.ych.core.handler.ItemHandler;
 import com.ych.core.handler.MonitorSummaryHandler;
 import com.ych.core.handler.MonitorUrlHandler;
 import com.ych.core.model.MonitorProjectUrl;
 import com.ych.core.model.MonitorSummary;
-import com.ych.core.service.ProjectUrlService;
 import com.ych.monitor.bean.MonitorBean;
-import com.ych.task.HttpMonitorTask;
 import com.ych.util.HttpClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -31,6 +31,11 @@ public class CollectJob {
     @Resource
     private MonitorSummaryHandler summaryHandler;
 
+    @Resource
+    private ItemHandler itemHandler;
+
+    @Resource
+    private Alert alert;
 
     @Scheduled(fixedRate = 1000 * 30)
     public void collectData() {
@@ -57,11 +62,21 @@ public class CollectJob {
                 monitorSummary.setRequestCount(bean.getRequestCount().intValue());
                 monitorSummary.setRequestType(bean.getRequestType());
                 monitorSummary.setTotalRequestTime(bean.getTotalRequestTime().longValue());
+                if (alert.isAlert(monitorSummary)) {
+                    alert.triggerAlert(monitorSummary);
+                }
                 summaryList.add(monitorSummary);
             }
             summaryHandler.insert(summaryList);
         }
         log.info("<---------------[COLLECT-JOB] end---------------->");
+    }
+
+    @Scheduled(fixedRate = 1000 * 20)
+    public void settleSummary() {
+        log.info("<------------[SETTLE-JOB] start--------->");
+        itemHandler.settleItem();
+        log.info("<-----------[SETTLE-JOB] end------->");
     }
 
 }

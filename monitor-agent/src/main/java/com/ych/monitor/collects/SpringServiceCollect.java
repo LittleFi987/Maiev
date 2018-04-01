@@ -57,7 +57,7 @@ public class SpringServiceCollect extends AbstractCollectors implements Collect 
     public byte[] transform(ClassLoader loader, String className, byte[] classfileBuffer, CtClass ctClass) throws Exception {
         AgentLoader agentLoader = new AgentLoader(className, loader, ctClass);
         for (CtMethod ctMethod : ctClass.getDeclaredMethods()) {
-            // 过滤插装方法
+            // 过滤插桩方法
             if (!verifyMethod(ctMethod)) {
                 continue;
             }

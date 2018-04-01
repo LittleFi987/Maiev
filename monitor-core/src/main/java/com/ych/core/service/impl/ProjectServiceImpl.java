@@ -68,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void update(MonitorProject monitorProject) {
         monitorProject.setUpdateTime(new Date());
-        monitorProjectMapper.updateByPrimaryKey(monitorProject);
+        monitorProjectMapper.updateByPrimaryKeySelective(monitorProject);
     }
 
     @Override
