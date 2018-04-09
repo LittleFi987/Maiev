@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @ToString
-public class ProjectDto implements Serializable, Param {
+public class ProjectDTO implements Serializable, Param {
 
     private static final long serialVersionUID = -3632277010712191571L;
     private Integer id;

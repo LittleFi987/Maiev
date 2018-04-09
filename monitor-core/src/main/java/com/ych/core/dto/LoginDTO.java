@@ -8,7 +8,7 @@ import lombok.Data;
  * Created by chenhao.ye on 15/03/2018.
  */
 @Data
-public class LoginDto implements Param {
+public class LoginDTO implements Param {
 
     private String username;
 

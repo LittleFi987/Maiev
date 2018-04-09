@@ -60,4 +60,11 @@ public class MonitorItemServiceImpl implements MonitorItemService {
         }
         return monitorItems.get(0);
     }
+
+    @Override
+    public Long countByProjectIds(List<Integer> projectId) {
+        MonitorItemExample example = new MonitorItemExample();
+        example.createCriteria().andProjectIdIn(projectId);
+        return monitorItemMapper.countByExample(example);
+    }
 }

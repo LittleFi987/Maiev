@@ -2,7 +2,7 @@ package com.ych.gateway.controller;
 
 import com.ych.core.common.Pagination;
 import com.ych.core.common.Response;
-import com.ych.core.dto.MonitorItemDto;
+import com.ych.core.dto.MonitorItemDTO;
 import com.ych.core.handler.ItemHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +22,7 @@ public class ItemProject {
 
     @GetMapping("/api/item/page")
     public Response paging(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-        Pagination<MonitorItemDto> paging = itemHandler.paging(page, size);
+        Pagination<MonitorItemDTO> paging = itemHandler.paging(page, size);
         return Response.success(paging);
     }
 

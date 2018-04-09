@@ -1,7 +1,7 @@
 package com.ych.gateway.controller;
 
 import com.ych.core.common.Response;
-import com.ych.core.dto.ProjectDto;
+import com.ych.core.dto.ProjectDTO;
 import com.ych.core.handler.ProjectHandler;
 import com.ych.gateway.annotations.CurrentUser;
 import org.springframework.util.StringUtils;
@@ -19,7 +19,7 @@ public class ProjectController {
     private ProjectHandler projectHandler;
 
     @PostMapping("/api/project")
-    public Response create(@RequestBody ProjectDto projectDto, @CurrentUser Integer userId) {
+    public Response create(@RequestBody ProjectDTO projectDto, @CurrentUser Integer userId) {
         projectDto.setUserId(userId);
         if (StringUtils.isEmpty(projectDto.getId())) {
             projectHandler.create(projectDto);
@@ -42,7 +42,7 @@ public class ProjectController {
 
     @GetMapping("/api/project")
     public Response getById(@RequestParam Integer id) {
-        ProjectDto projectDto = projectHandler.getById(id);
+        ProjectDTO projectDto = projectHandler.getById(id);
         return Response.success(projectDto);
     }
 

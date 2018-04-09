@@ -13,4 +13,7 @@ public interface MonitorSummaryService {
     void insertMonitorListSummary(List<MonitorSummary> list);
 
     List<MonitorSummary> listByStatus(HandleStatus status);
+
+    List<MonitorSummary> sortByMaxTotalRequestTime();
+
 }

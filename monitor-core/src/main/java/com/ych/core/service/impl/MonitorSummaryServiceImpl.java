@@ -43,4 +43,11 @@ public class MonitorSummaryServiceImpl implements MonitorSummaryService {
         }
         return summaryList;
     }
+
+    @Override
+    public List<MonitorSummary> sortByMaxTotalRequestTime() {
+        MonitorSummaryExample example = new MonitorSummaryExample();
+        example.setOrderByClause("total_request_time desc limit 0,10");
+        return monitorSummaryMapper.selectByExample(example);
+    }
 }

@@ -1,6 +1,8 @@
 package com.ych.core.service;
 
 import com.ych.core.common.Pagination;
+import com.ych.core.enums.DeleteStatus;
+import com.ych.core.enums.project.ProjectStatus;
 import com.ych.core.model.MonitorProject;
 
 import java.util.List;
@@ -19,4 +21,8 @@ public interface ProjectService {
     void update(MonitorProject monitorProject);
 
     MonitorProject getById(Integer id);
+
+    Long countByUserId(Integer userId, DeleteStatus status);
+
+    List<MonitorProject> listByUserId(Integer userId, DeleteStatus status);
 }

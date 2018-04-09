@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by chenhao.ye on 18/03/2018.
  */
 @Data
-public class MonitorItemDto implements Serializable {
+public class MonitorItemDTO implements Serializable {
 
     private static final long serialVersionUID = 3772667324850511746L;
     private Integer id;

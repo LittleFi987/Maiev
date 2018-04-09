@@ -2,7 +2,7 @@ package com.ych.core.handler;
 
 import com.google.common.collect.Lists;
 import com.ych.core.common.Pagination;
-import com.ych.core.dto.MonitorItemDto;
+import com.ych.core.dto.MonitorItemDTO;
 import com.ych.core.enums.summary.HandleStatus;
 import com.ych.core.model.MonitorDetail;
 import com.ych.core.model.MonitorItem;
@@ -19,7 +19,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by chenhao.ye on 18/03/2018.
@@ -74,19 +73,19 @@ public class ItemHandler {
         }
     }
 
-    public Pagination<MonitorItemDto> paging(Integer page, Integer size) {
+    public Pagination<MonitorItemDTO> paging(Integer page, Integer size) {
         Pagination<MonitorDetail> paging = monitorDetailService.paging(page, size);
         List<MonitorDetail> detailList = paging.getList();
-        List<MonitorItemDto> dtoList = Lists.newArrayList();
+        List<MonitorItemDTO> dtoList = Lists.newArrayList();
         for (MonitorDetail detail : detailList) {
-            MonitorItemDto itemDto = new MonitorItemDto();
+            MonitorItemDTO itemDto = new MonitorItemDTO();
             MonitorItem item = monitorItemService.getById(detail.getMonitorItemId());
             BeanUtils.copyProperties(detail, itemDto);
             itemDto.setProjectName(item.getProjectName());
             itemDto.setMonitorName(item.getMonitorItemName());
             dtoList.add(itemDto);
         }
-        Pagination<MonitorItemDto> newPaging = new Pagination<>();
+        Pagination<MonitorItemDTO> newPaging = new Pagination<>();
         newPaging.setCurrentPage(page);
         newPaging.setPageSize(size);
         newPaging.setList(dtoList);

@@ -61,4 +61,11 @@ public class MonitorDetailServiceImpl implements MonitorDetailService {
         pagination.setCurrentPage(page);
         return pagination;
     }
+
+    @Override
+    public List<MonitorDetail> sortByRequestTime() {
+        MonitorDetailExample example = new MonitorDetailExample();
+        example.setOrderByClause("request_time desc limit 0,10");
+        return monitorDetailMapper.selectByExample(example);
+    }
 }

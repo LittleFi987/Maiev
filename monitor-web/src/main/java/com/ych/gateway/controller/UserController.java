@@ -1,8 +1,8 @@
 package com.ych.gateway.controller;
 
 import com.ych.core.common.Response;
-import com.ych.core.dto.LoginDto;
-import com.ych.core.dto.UserDto;
+import com.ych.core.dto.LoginDTO;
+import com.ych.core.dto.UserDTO;
 import com.ych.core.enums.UserStatus;
 import com.ych.core.enums.user.UserResponseEnum;
 import com.ych.core.handler.UserHandler;
@@ -37,10 +37,10 @@ public class UserController {
     private JWTConfig jwtConfig;
 
     @PostMapping("/api/login")
-    public Response login(@RequestBody LoginDto loginDto) {
+    public Response login(@RequestBody LoginDTO loginDto) {
         String username = loginDto.getUsername();
         String pwd = loginDto.getPwd();
-        UserDto userDto = userHandler.findByName(username, UserStatus.NORMAL);
+        UserDTO userDto = userHandler.findByName(username, UserStatus.NORMAL);
         UserToken token = new UserToken(username, pwd);
 
         try {
@@ -61,7 +61,7 @@ public class UserController {
 
 
     @PostMapping("/api/regist")
-    public Response regist(@RequestBody UserDto userDTO) {
+    public Response regist(@RequestBody UserDTO userDTO) {
         passwordHelper.encryptPassword(userDTO);
         userHandler.create(userDTO);
         return Response.success();

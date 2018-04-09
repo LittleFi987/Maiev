@@ -1,7 +1,7 @@
 package com.ych.core.handler;
 
 import com.ych.core.common.Pagination;
-import com.ych.core.dto.ProjectDto;
+import com.ych.core.dto.ProjectDTO;
 import com.ych.core.model.MonitorProject;
 import com.ych.core.model.MonitorProjectUrl;
 import com.ych.core.service.ProjectService;
@@ -28,7 +28,7 @@ public class ProjectHandler {
     private ProjectUrlService projectUrlService;
 
     @Transactional
-    public void create(ProjectDto projectDto) {
+    public void create(ProjectDTO projectDto) {
         MonitorProject monitorProject = new MonitorProject();
         BeanUtils.copyProperties(projectDto, monitorProject);
         MonitorProject project = projectService.create(monitorProject);
@@ -50,7 +50,7 @@ public class ProjectHandler {
     }
 
     @Transactional
-    public void update(ProjectDto projectDto) {
+    public void update(ProjectDTO projectDto) {
         MonitorProject project = new MonitorProject();
         BeanUtils.copyProperties(projectDto, project);
         projectService.update(project);
@@ -67,10 +67,10 @@ public class ProjectHandler {
         }
     }
 
-    public ProjectDto getById(Integer id) {
+    public ProjectDTO getById(Integer id) {
         MonitorProject project = projectService.getById(id);
         List<String> urlList = projectUrlService.getByProjectId(id).stream().map(MonitorProjectUrl::getMonitorUrl).collect(Collectors.toList());
-        ProjectDto projectDto = new ProjectDto();
+        ProjectDTO projectDto = new ProjectDTO();
         BeanUtils.copyProperties(project, projectDto);
         projectDto.setUrls(urlList);
         return projectDto;
