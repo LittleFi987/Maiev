@@ -43,7 +43,8 @@ public class SpringControlCollect extends AbstractCollectors implements Collect 
     public boolean isTarget(String className, ClassLoader classLoader, CtClass ctClass) {
         try {
             for (Object o : ctClass.getAnnotations()) {
-                if (o.toString().startsWith("@org.springframework.stereotype.Controller")) {
+                if (o.toString().startsWith("@org.springframework.stereotype.Controller") ||
+                        o.toString().startsWith("@org.springframework.web.bind.annotation.RestController")) {
                     return true;
                 }
             }
@@ -99,7 +100,9 @@ public class SpringControlCollect extends AbstractCollectors implements Collect 
     private String getRequestMappingValue(CtMethod method) throws ClassNotFoundException {
         String val = "";
         for (Object o : method.getAnnotations()) {
-           if (o.toString().startsWith("@org.springframework.web.bind.annotation.RequestMapping")) {
+           if (o.toString().startsWith("@org.springframework.web.bind.annotation.RequestMapping") ||
+                   o.toString().startsWith("@org.springframework.web.bind.annotation.GetMapping") ||
+                   o.toString().startsWith("@org.springframework.web.bind.annotation.PostMapping")) {
                val = val + getAnnotationValue("value", o.toString());
                return val == null ? "/" : val;
            }

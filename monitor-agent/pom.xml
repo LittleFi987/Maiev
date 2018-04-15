@@ -58,51 +58,68 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-shade-plugin</artifactId>-->
+                <!--<version>2.4.3</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>shade</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--<artifactSet>-->
+                        <!--<includes>-->
+                            <!--<include>javassist:javassist:jar:</include>-->
+                        <!--</includes>-->
+                    <!--</artifactSet>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-jar-plugin</artifactId>-->
+                <!--<version>2.3.2</version>-->
+                <!--<configuration>-->
+                    <!--<archive>-->
+                        <!--<manifestEntries>-->
+                            <!--<Project-name>${project.name}</Project-name>-->
+                            <!--<Project-version>${project.version}</Project-version>-->
+                            <!--<Premain-Class>com.ych.monitor.Agent</Premain-Class>-->
+                            <!--<Boot-Class-Path>javassist-3.21.0-GA.jar</Boot-Class-Path>-->
+                            <!--<Can-Redefine-Classes>false</Can-Redefine-Classes>-->
+                        <!--</manifestEntries>-->
+                    <!--</archive>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.3</version>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest></manifest>
+                        <manifestEntries>
+                            <Project-name>${project.name}</Project-name>
+                            <Project-version>${project.version}</Project-version>
+                            <Premain-Class>com.ych.monitor.Agent</Premain-Class>
+                            <Can-Redefine-Classes>false</Can-Redefine-Classes>
+                        </manifestEntries>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
                 <executions>
                     <execution>
+                        <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <artifactSet>
-                        <includes>
-                            <include>javassist:javassist:jar:</include>
-                        </includes>
-                    </artifactSet>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <archive>
-                        <index>true</index>
-                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-                        <manifest>
-                            <addDefaultImplementationEntries/>
-                        </manifest>
-                    </archive>
-                    <!--<archive>-->
-                        <!--<manifest>-->
-                            <!--<addclasspath>true</addclasspath>-->
-                            <!--<classpathprefix>lib/</classpathprefix>-->
-                        <!--</manifest>-->
-                        <!--<manifestentries>-->
-                            <!--<premain-class>com.ych.monitor.Agent</premain-class>-->
-                        <!--</manifestentries>-->
-                    <!--</archive>-->
-                </configuration>
             </plugin>
         </plugins>
-
-
     </build>
 </project>

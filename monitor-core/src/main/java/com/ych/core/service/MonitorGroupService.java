@@ -1,5 +1,8 @@
 package com.ych.core.service;
 
+import com.ych.core.model.MonitorGroup;
+import com.ych.core.model.MonitorGroupItem;
+
 import java.util.List;
 
 /**
@@ -9,4 +12,9 @@ public interface MonitorGroupService {
 
     Long countGroupByProjectId(List<Integer> projectId);
 
+    void createGroup(Integer projectId, String name, List<Integer> itemIds);
+
+    List<MonitorGroup> listAll();
+
+    List<MonitorGroupItem> getByGroupId(Integer groupId);
 }

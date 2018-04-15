@@ -10,6 +10,8 @@ import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.security.ProtectionDomain;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by chenhao.ye on 11/03/2018.
@@ -17,6 +19,7 @@ import java.security.ProtectionDomain;
 public class Agent {
 
     private static Collect collect;
+
 
     public static void premain(String agentArgs, Instrumentation instrumentation) {
 

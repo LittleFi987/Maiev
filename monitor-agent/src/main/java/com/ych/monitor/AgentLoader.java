@@ -30,12 +30,8 @@ public class AgentLoader {
         CtMethod ctMethod = method;
         String methodName = method.getName();
         CtMethod agentMethod = CtNewMethod.copy(ctMethod, methodName + AGENT_NAME, ctClass, null);
-
         ctClass.addMethod(agentMethod);
-
         method.setBody(build.buildSrc(method));
-        ctClass.toClass();
-
     }
 
 

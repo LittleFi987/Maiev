@@ -24,8 +24,8 @@ public class SpringControlCollectTest {
 //        System.out.println(SpringControlCollect.INSTANCE.isTarget(name, loader, ctClass));
         SpringControlCollect.INSTANCE.transform(loader, name, null, ctClass);
 
-
         Hello hello = new Hello();
+
         hello.sayHello(1);
     }
 

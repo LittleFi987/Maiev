@@ -1,6 +1,5 @@
-package com.test;
+package com.ych;
 
-import javassist.NotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Hello {
 
     public Hello() {
-        System.out.println("hello load....");
     }
 
     @RequestMapping("/hello")
