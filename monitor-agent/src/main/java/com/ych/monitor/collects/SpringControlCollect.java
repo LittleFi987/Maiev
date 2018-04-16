@@ -57,6 +57,7 @@ public class SpringControlCollect extends AbstractCollectors implements Collect 
     @Override
     public byte[] transform(ClassLoader loader, String className, byte[] classfileBuffer, CtClass ctClass) throws Exception {
         AgentLoader agentLoader = new AgentLoader(className, loader, ctClass);
+        String classRequestUrl = getRequestMappingValue(ctClass);
         for (CtMethod ctMethod : ctClass.getDeclaredMethods()) {
             String requestUrl;
             // 过滤插桩方法
@@ -64,7 +65,7 @@ public class SpringControlCollect extends AbstractCollectors implements Collect 
                 continue;
             }
 
-            requestUrl = getRequestMappingValue(ctMethod);
+            requestUrl = classRequestUrl + getRequestMappingValue(ctMethod);
             if (requestUrl == null) {
                 continue;
             }
@@ -106,6 +107,19 @@ public class SpringControlCollect extends AbstractCollectors implements Collect 
                val = val + getAnnotationValue("value", o.toString());
                return val == null ? "/" : val;
            }
+        }
+        return null;
+    }
+
+    private String getRequestMappingValue(CtClass ctClass) throws ClassNotFoundException {
+        String val = "";
+        for (Object o : ctClass.getAnnotations()) {
+            if (o.toString().startsWith("@org.springframework.web.bind.annotation.RequestMapping") ||
+                    o.toString().startsWith("@org.springframework.web.bind.annotation.GetMapping") ||
+                    o.toString().startsWith("@org.springframework.web.bind.annotation.PostMapping")) {
+                val = val + getAnnotationValue("value", o.toString());
+                return val == null ? "/" : val;
+            }
         }
         return null;
     }

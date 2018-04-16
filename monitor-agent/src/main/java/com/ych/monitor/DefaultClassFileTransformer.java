@@ -32,6 +32,7 @@ public class DefaultClassFileTransformer implements ClassFileTransformer {
                 || loader.getClass().getName().equals("sun.reflect.DelegatingClassLoader")
                 || loader.getClass().getName().equals("org.apache.catalina.loader.standar")
                 || className.indexOf("$Proxy") != -1
+                || className.indexOf("CGLIB$") != -1
                 || className.startsWith("java")
                 || className.contains("transaction")
                 || className.contains("autoconfigure")) {
