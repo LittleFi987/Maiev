@@ -5,6 +5,8 @@ import com.ych.monitor.AgentLoader;
 import com.ych.monitor.Collect;
 import com.ych.monitor.bean.ServiceStatistics;
 import com.ych.monitor.bean.Statistics;
+import com.ych.monitor.collects.api.TransformMaker;
+import com.ych.monitor.collects.core.SpringServiceMaker;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.Modifier;
@@ -15,28 +17,6 @@ import javassist.Modifier;
 public class SpringServiceCollect extends AbstractCollectors implements Collect {
 
     public static final SpringServiceCollect INSTANCE = new SpringServiceCollect();
-
-    private static String beginSrc;
-
-    private static String endSrc;
-
-    private static String errorSrc;
-
-    static {
-        StringBuilder sBuilder = new StringBuilder();
-        sBuilder.append("com.ych.monitor.collects.SpringServiceCollect instance = com.ych.monitor.collects.SpringServiceCollect.INSTANCE;");
-        sBuilder.append("com.ych.monitor.bean.ServiceStatistics statics = instance.begin(\"%s\",\"%s\");");
-        beginSrc = sBuilder.toString();
-
-        sBuilder = new StringBuilder();
-        sBuilder.append("instance.end(statics);");
-        endSrc = sBuilder.toString();
-
-        sBuilder = new StringBuilder();
-        sBuilder.append("instance.error(statics, e);");
-        errorSrc = sBuilder.toString();
-    }
-
 
     @Override
     public boolean isTarget(String className, ClassLoader classLoader, CtClass ctClass) {
@@ -63,10 +43,10 @@ public class SpringServiceCollect extends AbstractCollectors implements Collect 
             }
 
             AgentLoader.MthodSrcBuild build = new AgentLoader.MthodSrcBuild();
-            build.setBeginSrc(String.format(beginSrc, className, ctMethod.getName()));
-            build.setEndSrc(endSrc);
-            build.setErrorSrc(errorSrc);
-
+            TransformMaker transformMaker = new SpringServiceMaker(className, ctMethod.getName());
+            build.setBeginSrc(transformMaker.begin());
+            build.setEndSrc(transformMaker.end());
+            build.setErrorSrc(transformMaker.error());
             agentLoader.updateMethod(ctMethod, build);
         }
         return agentLoader.toBytecode();

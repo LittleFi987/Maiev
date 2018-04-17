@@ -18,6 +18,8 @@ com/ych/monitor/log/core/FileWriter$1.class
 com/ych/monitor/log/core/FileWriter$4.class
 com/ych/monitor/log/core/LogMessageHolder.class
 com/ych/monitor/log/core/WriterFactory.class
+com/ych/monitor/collects/core/SpringControlMaker.class
+com/ych/monitor/collects/api/TransformMaker.class
 com/ych/monitor/conf/Config.class
 com/ych/monitor/conf/Constants.class
 com/ych/monitor/log/LogManager.class
@@ -30,6 +32,7 @@ com/ych/monitor/collects/SpringServiceCollect.class
 com/ych/monitor/log/core/FileWriter.class
 com/ych/monitor/log/NoopLogger$1.class
 com/ych/monitor/log/core/FileWriter$5.class
+com/ych/monitor/collects/core/SpringServiceMaker.class
 com/ych/monitor/log/LogResolver.class
 com/ych/monitor/bean/ServiceStatistics.class
 com/ych/monitor/conf/Config$Logging.class
