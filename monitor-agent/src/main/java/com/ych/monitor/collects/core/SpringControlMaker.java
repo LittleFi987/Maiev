@@ -3,6 +3,7 @@ package com.ych.monitor.collects.core;
 import com.ych.monitor.collects.api.TransformMaker;
 
 /**
+ * springController 插桩
  * @Author yechenhao
  * @Date 16/04/2018
  */
@@ -26,12 +27,18 @@ public class SpringControlMaker implements TransformMaker {
         sBuilder.append("com.ych.monitor.collects.SpringControlCollect instance = com.ych.monitor.collects.SpringControlCollect.INSTANCE;");
         sBuilder.append("com.ych.monitor.bean.WebStatistics statics = (com.ych.monitor.bean.WebStatistics)instance.begin(\"%s\",\"%s\");");
         sBuilder.append("statics.setUrlAddress(\"%s\");");
+        sBuilder.append("com.ych.monitor.collects.core.MonitorTrack trackInstance = com.ych.monitor.collects.core.MonitorTrack.INSTANCE;");
         return String.format(sBuilder.toString(), className, methodName, requestUrl);
     }
 
     @Override
     public String end() {
-        return "instance.end(statics);";
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("instance.end(statics);");
+        stringBuilder.append("trackInstance.put(statics.getMethodName(), statics.getUserTime());");
+        stringBuilder.append("System.out.println(trackInstance.get());");
+        stringBuilder.append("trackInstance.remove();");
+        return stringBuilder.toString();
     }
 
     @Override

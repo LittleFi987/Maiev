@@ -67,4 +67,11 @@ public class MonitorItemServiceImpl implements MonitorItemService {
         example.createCriteria().andProjectIdIn(projectId);
         return monitorItemMapper.countByExample(example);
     }
+
+    @Override
+    public List<MonitorItem> listByItemIds(List<Integer> itemIds) {
+        MonitorItemExample example = new MonitorItemExample();
+        example.createCriteria().andIdIn(itemIds);
+        return monitorItemMapper.selectByExample(example);
+    }
 }

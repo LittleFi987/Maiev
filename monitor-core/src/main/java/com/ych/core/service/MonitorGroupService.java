@@ -16,5 +16,7 @@ public interface MonitorGroupService {
 
     List<MonitorGroup> listAll();
 
-    List<MonitorGroupItem> getByGroupId(Integer groupId);
+    List<MonitorGroupItem> listByGroupId(Integer groupId);
+
+    List<MonitorGroup> listByProjectIds(List<Integer> list);
 }

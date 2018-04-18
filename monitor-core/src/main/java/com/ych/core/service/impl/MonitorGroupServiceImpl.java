@@ -2,13 +2,11 @@ package com.ych.core.service.impl;
 
 import com.ych.core.mapper.MonitorGroupItemMapper;
 import com.ych.core.mapper.MonitorGroupMapper;
-import com.ych.core.model.MonitorGroup;
-import com.ych.core.model.MonitorGroupExample;
-import com.ych.core.model.MonitorGroupItem;
-import com.ych.core.model.MonitorGroupItemExample;
+import com.ych.core.model.*;
 import com.ych.core.service.MonitorGroupService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -61,9 +59,16 @@ public class MonitorGroupServiceImpl implements MonitorGroupService {
     }
 
     @Override
-    public List<MonitorGroupItem> getByGroupId(Integer groupId) {
+    public List<MonitorGroupItem> listByGroupId(Integer groupId) {
         MonitorGroupItemExample example = new MonitorGroupItemExample();
         example.createCriteria().andGroupIdEqualTo(groupId);
         return monitorGroupItemMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<MonitorGroup> listByProjectIds(List<Integer> list) {
+        MonitorGroupExample example = new MonitorGroupExample();
+        example.createCriteria().andProjectIdIn(list);
+        return monitorGroupMapper.selectByExample(example);
     }
 }

@@ -18,12 +18,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultClassFileTransformer implements ClassFileTransformer {
 
-    private Collect collect;
+    private Collect[] collects;
 
     private Map<ClassLoader, ClassPool> classPoolMap = new ConcurrentHashMap<>();
 
-    public DefaultClassFileTransformer(Collect collect) {
-        this.collect = collect;
+    public DefaultClassFileTransformer(Collect[] collects) {
+        this.collects = collects;
     }
 
     @Override
@@ -48,9 +48,11 @@ public class DefaultClassFileTransformer implements ClassFileTransformer {
         try {
             className = className.replaceAll("/", ".");
             CtClass ctClass = classPool.get(className);
-            if (collect.isTarget(className, loader, ctClass)) {
-                byte[] bytes = collect.transform(loader, className, classfileBuffer, ctClass);
-                return bytes;
+            for (int i = 0; i < collects.length; i++) {
+                if (collects[i].isTarget(className, loader, ctClass)) {
+                    byte[] bytes = collects[i].transform(loader, className, classfileBuffer, ctClass);
+                    return bytes;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

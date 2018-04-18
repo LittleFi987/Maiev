@@ -1,6 +1,7 @@
 package com.ych.monitor;
 
 import com.ych.monitor.collects.SpringControlCollect;
+import com.ych.monitor.collects.SpringServiceCollect;
 import com.ych.monitor.log.ILog;
 import com.ych.monitor.log.LogManager;
 import javassist.ClassPool;
@@ -20,14 +21,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Agent {
 
-    private static Collect collect;
+    private static Collect[] collects;
 
     public static final ILog log = LogManager.getLogger(Agent.class);
 
     public static void premain(String agentArgs, Instrumentation instrumentation) {
         log.info("------------->Maiev Agent Start<------------");
-        collect = SpringControlCollect.INSTANCE;
-        instrumentation.addTransformer(new DefaultClassFileTransformer(collect));
+        collects = new Collect[]{SpringControlCollect.INSTANCE,
+                SpringServiceCollect.INSTANCE};
+        instrumentation.addTransformer(new DefaultClassFileTransformer(collects));
 
     }
 

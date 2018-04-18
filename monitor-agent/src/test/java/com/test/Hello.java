@@ -1,7 +1,5 @@
 package com.test;
 
-import com.test.call.TrackMap;
-import javassist.NotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,9 +16,6 @@ public class Hello {
 
     @RequestMapping("/hello")
     public void sayHello(int name) {
-        TrackMap.INSTANCE.put("Hello.sayHello");
         System.out.println(name + ": hello");
     }
-
-
 }

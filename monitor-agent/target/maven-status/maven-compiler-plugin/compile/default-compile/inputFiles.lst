@@ -4,6 +4,7 @@
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collects/SpringServiceCollect.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collects/SpringControlCollect.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/SystemOutWriter.java
+/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collects/core/MonitorTrack.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/core/WriterFactory.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/ILog.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/core/LogMessageHolder.java

@@ -11,12 +11,25 @@ public class TestTrack {
 
     @Test
     public void testTrack1() {
-        Hello hello = new Hello();
-        hello.sayHello(1);
-        testTrack2();
-        testTrack3();
-        String threadLocal = TrackMap.INSTANCE.getThreadLocal();
-        System.out.println(threadLocal);
+        new Thread(() -> {
+            Hello hello = new Hello();
+            hello.sayHello(1);
+            testTrack2();
+            testTrack3();
+            String threadLocal = TrackMap.INSTANCE.getThreadLocal();
+            System.out.println("thread1" + threadLocal);
+        }).start();
+
+        new Thread(() -> {
+            Hello hello = new Hello();
+            hello.sayHello(1);
+            testTrack2();
+            testTrack3();
+            String threadLocal = TrackMap.INSTANCE.getThreadLocal();
+            System.out.println("thread2" + threadLocal);
+        }).start();
+
+
     }
 
     private void testTrack2() {

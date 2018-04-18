@@ -19,4 +19,6 @@ public interface MonitorItemService {
 
     Long countByProjectIds(List<Integer> projectId);
 
+    List<MonitorItem> listByItemIds(List<Integer> itemIds);
+
 }
