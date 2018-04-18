@@ -2,6 +2,7 @@ package com.ych.core.handler;
 
 import com.ych.core.common.Pagination;
 import com.ych.core.dto.ProjectDTO;
+import com.ych.core.enums.DeleteStatus;
 import com.ych.core.model.MonitorProject;
 import com.ych.core.model.MonitorProjectUrl;
 import com.ych.core.service.ProjectService;
@@ -27,7 +28,7 @@ public class ProjectHandler {
     @Resource
     private ProjectUrlService projectUrlService;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void create(ProjectDTO projectDto) {
         MonitorProject monitorProject = new MonitorProject();
         BeanUtils.copyProperties(projectDto, monitorProject);
@@ -47,6 +48,11 @@ public class ProjectHandler {
 
     public List<MonitorProject> listAll() {
         return projectService.listAll();
+    }
+
+    public List<MonitorProject> listAllByUserId(Integer userId) {
+        List<MonitorProject> monitorProjects = projectService.listByUserId(userId, DeleteStatus.NORMAL);
+        return monitorProjects;
     }
 
     @Transactional

@@ -38,7 +38,11 @@ public class ItemHandler {
     @Resource
     private MonitorDetailService monitorDetailService;
 
-    @Transactional
+    /**
+     * 汇总数据
+     *
+     */
+    @Transactional(rollbackFor = Exception.class)
     public void settleItem() {
         List<MonitorSummary> summaryList = monitorSummaryService.listByStatus(HandleStatus.NO_HANDLE);
         if (CollectionUtils.isEmpty(summaryList)) {
@@ -69,9 +73,9 @@ public class ItemHandler {
                 monitorDetail.setAvgTime(avgTime);
                 monitorDetailService.update(monitorDetail);
             }
-
         }
     }
+
 
     public Pagination<MonitorItemDTO> paging(Integer page, Integer size) {
         Pagination<MonitorDetail> paging = monitorDetailService.paging(page, size);

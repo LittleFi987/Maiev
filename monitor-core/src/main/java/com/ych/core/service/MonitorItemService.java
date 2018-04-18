@@ -21,4 +21,6 @@ public interface MonitorItemService {
 
     List<MonitorItem> listByItemIds(List<Integer> itemIds);
 
+    List<MonitorItem> listByProjectId(Integer projectId);
+
 }

@@ -3,6 +3,8 @@ package com.ych.core.handler;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ych.core.dto.GroupDTO;
+import com.ych.core.dto.GroupItemDTO;
+import com.ych.core.dto.MonitorItemDTO;
 import com.ych.core.dto.ProjectGroupDTO;
 import com.ych.core.enums.DeleteStatus;
 import com.ych.core.model.MonitorGroup;
@@ -14,6 +16,7 @@ import com.ych.core.service.MonitorItemService;
 import com.ych.core.service.ProjectService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -81,11 +84,60 @@ public class GroupHandler {
     }
 
     public void createGroup(Integer projectId, List<Integer> itemIds, String groupName) {
-
+        monitorGroupService.createGroup(projectId, groupName, itemIds);
     }
 
     public void updateGroup() {
 
     }
 
+    public List<GroupItemDTO> listByProjectIdAndGroupId(Integer projectId, Integer groupId) {
+        List<MonitorItemDTO> itemDTOList = listByProjectId(projectId);
+        List<MonitorGroupItem> monitorGroupItems = null;
+        List<GroupItemDTO> groupItemDTOList = Lists.newArrayList();
+        GroupItemDTO item = null;
+        if (!ObjectUtils.isEmpty(groupId)) {
+            monitorGroupItems = monitorGroupService.listByGroupId(projectId);
+        }
+        if (!CollectionUtils.isEmpty(monitorGroupItems)) {
+            for (MonitorItemDTO itemDTO : itemDTOList) {
+                item = new GroupItemDTO();
+                item.setItemId(itemDTO.getItemId());
+                item.setItemName(itemDTO.getMonitorName());
+                for (MonitorGroupItem monitorGroupItem : monitorGroupItems) {
+                    if (monitorGroupItem.getMonitorItemId().equals(itemDTO.getItemId())) {
+                        item.setStatus(1);
+                    }
+                }
+                if (item.getStatus() == null) {
+                    item.setStatus(0);
+                }
+                groupItemDTOList.add(item);
+            }
+        } else {
+            for (MonitorItemDTO itemDTO : itemDTOList) {
+                item = new GroupItemDTO();
+                item.setItemId(itemDTO.getItemId());
+                item.setItemName(itemDTO.getMonitorName());
+                if (item.getStatus() == null) {
+                    item.setStatus(0);
+                }
+                groupItemDTOList.add(item);
+            }
+        }
+        return groupItemDTOList;
+    }
+
+    private List<MonitorItemDTO> listByProjectId(Integer projectId) {
+        List<MonitorItem> monitorItems = monitorItemService.listByProjectId(projectId);
+        List<MonitorItemDTO> itemDTOList = Lists.newArrayList();
+        MonitorItemDTO itemDTO;
+        for (MonitorItem monitorItem : monitorItems) {
+            itemDTO = new MonitorItemDTO();
+            itemDTO.setItemId(monitorItem.getId());
+            itemDTO.setMonitorName(monitorItem.getMonitorItemName());
+            itemDTOList.add(itemDTO);
+        }
+        return itemDTOList;
+    }
 }

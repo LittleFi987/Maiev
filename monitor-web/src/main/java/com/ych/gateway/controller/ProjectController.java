@@ -35,8 +35,8 @@ public class ProjectController {
     }
 
     @GetMapping("/api/project/list")
-    public Response listAll() {
-        return Response.success(projectHandler.listAll());
+    public Response listAllByUserId(@CurrentUser Integer userId) {
+        return Response.success(projectHandler.listAllByUserId(userId));
     }
 
 
