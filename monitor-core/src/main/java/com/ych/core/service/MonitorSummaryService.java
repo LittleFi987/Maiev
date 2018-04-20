@@ -16,4 +16,7 @@ public interface MonitorSummaryService {
 
     List<MonitorSummary> sortByMaxTotalRequestTime();
 
+    List<MonitorSummary> listByMonitorName(String monitorName);
+
+    void handleMonitorListSummary(List<MonitorSummary> list);
 }

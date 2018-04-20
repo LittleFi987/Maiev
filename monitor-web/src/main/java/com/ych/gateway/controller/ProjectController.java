@@ -46,4 +46,10 @@ public class ProjectController {
         return Response.success(projectDto);
     }
 
+    @GetMapping("/api/delete-project")
+    public Response deleteById(@RequestParam Integer id) {
+        projectHandler.deleteById(id);
+        return Response.success();
+    }
+
 }

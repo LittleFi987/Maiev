@@ -1,10 +1,7 @@
 package com.ych.gateway.controller;
 
 import com.ych.core.common.Response;
-import com.ych.core.dto.GroupDTO;
-import com.ych.core.dto.GroupItemDTO;
-import com.ych.core.dto.GroupParam;
-import com.ych.core.dto.ProjectGroupDTO;
+import com.ych.core.dto.*;
 import com.ych.core.handler.GroupHandler;
 import com.ych.core.handler.ProjectHandler;
 import com.ych.gateway.annotations.CurrentUser;
@@ -44,4 +41,25 @@ public class GroupController {
         List<GroupItemDTO> groupItemDTOList = groupHandler.listByProjectIdAndGroupId(projectId, groupId);
         return Response.success(groupItemDTOList);
     }
+
+
+    @GetMapping("/api/group-detail")
+    public Response getGroupDetail(@RequestParam("projectId") Integer projectId,
+                                   @RequestParam("groupId") Integer groupId) {
+        GroupDetailDTO detailDTO = groupHandler.getDetailByProjectIdAndGroupId(projectId, groupId);
+        return Response.success(detailDTO);
+    }
+
+    @PostMapping("/api/update-group")
+    public Response updateGroup(@RequestBody GroupUpdateParam groupUpdateParam) {
+        groupHandler.updateGroup(groupUpdateParam.getGroupId(), groupUpdateParam.getItemIdList(), groupUpdateParam.getGroupName());
+        return Response.success();
+    }
+
+    @GetMapping("/api/group/delete-id")
+    public Response deleteByGroupId(@RequestParam("groupId") Integer groupId) {
+        groupHandler.deleteGroupById(groupId);
+        return Response.success();
+    }
+
 }

@@ -19,4 +19,12 @@ public interface MonitorGroupService {
     List<MonitorGroupItem> listByGroupId(Integer groupId);
 
     List<MonitorGroup> listByProjectIds(List<Integer> list);
+
+    List<MonitorGroup> listByProjectId(Integer projectId);
+
+    MonitorGroup getById(Integer id);
+
+    void update(Integer groupId, List<Integer> itemIds, String groupName);
+
+    void deleteByGroupId(Integer groupId);
 }

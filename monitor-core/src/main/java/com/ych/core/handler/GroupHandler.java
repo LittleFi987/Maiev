@@ -2,10 +2,7 @@ package com.ych.core.handler;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ych.core.dto.GroupDTO;
-import com.ych.core.dto.GroupItemDTO;
-import com.ych.core.dto.MonitorItemDTO;
-import com.ych.core.dto.ProjectGroupDTO;
+import com.ych.core.dto.*;
 import com.ych.core.enums.DeleteStatus;
 import com.ych.core.model.MonitorGroup;
 import com.ych.core.model.MonitorGroupItem;
@@ -38,11 +35,8 @@ public class GroupHandler {
     @Resource
     private MonitorItemService monitorItemService;
 
-
-
     public Map<Integer, List<ProjectGroupDTO>> ListGroupByUserId(Integer userId) {
         Map<Integer, List<ProjectGroupDTO>> map = Maps.newHashMap();
-        List<GroupDTO> groupDTOList = Lists.newArrayList();
         List<MonitorProject> monitorProjects = projectService.listByUserId(userId, DeleteStatus.NORMAL);
         if (CollectionUtils.isEmpty(monitorProjects)) {
             return Maps.newHashMap();
@@ -52,34 +46,40 @@ public class GroupHandler {
         if (CollectionUtils.isEmpty(monitorGroups)) {
             return Maps.newHashMap();
         }
-        GroupDTO groupDTO = null;
-        for (MonitorGroup monitorGroup : monitorGroups) {
-            if (map.get(monitorGroup.getProjectId()) == null) {
-                map.put(monitorGroup.getProjectId(), Lists.newArrayList());
-            }
-            List<ProjectGroupDTO> projectGroupDTOList = map.get(monitorGroup.getProjectId());
-            ProjectGroupDTO projectGroupDTO = new ProjectGroupDTO();
-            groupDTO = new GroupDTO();
-            groupDTO.setGroupName(monitorGroup.getGroupName());
-            groupDTO.setId(monitorGroup.getId());
-            List<MonitorGroupItem> monitorGroupItems = monitorGroupService.listByGroupId(monitorGroup.getId());
-            List<GroupDTO.GroupItem> groupItemList = Lists.newArrayList();
-            if (!CollectionUtils.isEmpty(monitorGroupItems)) {
-                for (MonitorGroupItem monitorGroupItem : monitorGroupItems) {
-                    GroupDTO.GroupItem groupItem = new GroupDTO.GroupItem();
-                    groupItem.setItemId(monitorGroupItem.getMonitorItemId());
-                    MonitorItem item = monitorItemService.getById(monitorGroupItem.getMonitorItemId());
-                    groupItem.setItemName(item.getMonitorItemName());
-                    groupItemList.add(groupItem);
+
+        ProjectGroupDTO projectGroupDTO = null;
+        for (MonitorProject monitorProject : monitorProjects) {
+            List<ProjectGroupDTO> projectGroupDTOList = Lists.newArrayList();
+            projectGroupDTO = new ProjectGroupDTO();
+            projectGroupDTO.setProjectName(monitorProject.getProjectName());
+            projectGroupDTO.setProjectId(monitorProject.getId());
+            List<GroupDTO> groupDTOS = Lists.newArrayList();
+            List<MonitorGroup> monitorGroupList = monitorGroupService.listByProjectId(monitorProject.getId());
+            if (!CollectionUtils.isEmpty(monitorGroupList)) {
+                for (MonitorGroup monitorGroup : monitorGroupList) {
+                    GroupDTO groupDTO = new GroupDTO();
+                    groupDTO.setGroupName(monitorGroup.getGroupName());
+                    groupDTO.setId(monitorGroup.getId());
+                    List<GroupDTO.GroupItem> groupItemList = Lists.newArrayList();
+                    List<MonitorGroupItem> monitorGroupItems = monitorGroupService.listByGroupId(monitorGroup.getId());
+                    for (MonitorGroupItem monitorGroupItem : monitorGroupItems) {
+                        MonitorItem item = monitorItemService.getById(monitorGroupItem.getMonitorItemId());
+                        GroupDTO.GroupItem groupItem = new GroupDTO.GroupItem();
+                        groupItem.setItemId(item.getId());
+                        groupItem.setItemName(item.getMonitorItemName());
+                        groupItemList.add(groupItem);
+                    }
+                    groupDTO.setItems(groupItemList);
+                    groupDTOS.add(groupDTO);
                 }
+                projectGroupDTO.setGroupDTOList(groupDTOS);
+                projectGroupDTOList.add(projectGroupDTO);
+            } else {
+                continue;
             }
-            groupDTO.setItems(groupItemList);
-            groupDTOList.add(groupDTO);
-            projectGroupDTO.setGroupDTOList(groupDTOList);
-            projectGroupDTO.setProjectId(monitorGroup.getProjectId());
-            projectGroupDTO.setProjectName(projectService.getById(monitorGroup.getProjectId()).getProjectName());
-            projectGroupDTOList.add(projectGroupDTO);
+            map.put(monitorProject.getId(), projectGroupDTOList);
         }
+
         return map;
     }
 
@@ -87,8 +87,20 @@ public class GroupHandler {
         monitorGroupService.createGroup(projectId, groupName, itemIds);
     }
 
-    public void updateGroup() {
+    public void updateGroup(Integer groupId, List<Integer> itemIds, String groupName) {
+        monitorGroupService.update(groupId, itemIds, groupName);
+    }
 
+
+    public GroupDetailDTO getDetailByProjectIdAndGroupId(Integer projectId, Integer groupId) {
+        List<GroupItemDTO> groupItemDTOList = listByProjectIdAndGroupId(projectId, groupId);
+        GroupDetailDTO groupDetailDTO = new GroupDetailDTO();
+        groupDetailDTO.setItemDTOList(groupItemDTOList);
+        MonitorGroup group = monitorGroupService.getById(groupId);
+        groupDetailDTO.setGroupName(group.getGroupName());
+        groupDetailDTO.setGroupId(groupId);
+        groupDetailDTO.setProjectName(projectService.getById(projectId).getProjectName());
+        return groupDetailDTO;
     }
 
     public List<GroupItemDTO> listByProjectIdAndGroupId(Integer projectId, Integer groupId) {
@@ -97,7 +109,7 @@ public class GroupHandler {
         List<GroupItemDTO> groupItemDTOList = Lists.newArrayList();
         GroupItemDTO item = null;
         if (!ObjectUtils.isEmpty(groupId)) {
-            monitorGroupItems = monitorGroupService.listByGroupId(projectId);
+            monitorGroupItems = monitorGroupService.listByGroupId(groupId);
         }
         if (!CollectionUtils.isEmpty(monitorGroupItems)) {
             for (MonitorItemDTO itemDTO : itemDTOList) {
@@ -128,6 +140,12 @@ public class GroupHandler {
         return groupItemDTOList;
     }
 
+
+    public void deleteGroupById(Integer groupId) {
+        monitorGroupService.deleteByGroupId(groupId);
+    }
+
+
     private List<MonitorItemDTO> listByProjectId(Integer projectId) {
         List<MonitorItem> monitorItems = monitorItemService.listByProjectId(projectId);
         List<MonitorItemDTO> itemDTOList = Lists.newArrayList();
@@ -140,4 +158,7 @@ public class GroupHandler {
         }
         return itemDTOList;
     }
+
+
+
 }

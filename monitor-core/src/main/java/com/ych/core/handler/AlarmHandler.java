@@ -27,6 +27,9 @@ public class AlarmHandler {
 
     public void alarm(MonitorSummary monitorSummary) {
         MonitorItem item = monitorItemService.getByItemName(monitorSummary.getMonitorName());
+        if (item == null) {
+            return;
+        }
         Integer itemId = item.getId();
         List<AlarmSet> alarmSets = alarmSetService.listByItemIdAndFlag(itemId, DeleteStatus.NORMAL);
         if (CollectionUtils.isEmpty(alarmSets)) {

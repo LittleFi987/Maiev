@@ -74,6 +74,7 @@ public class ItemHandler {
                 monitorDetailService.update(monitorDetail);
             }
         }
+        monitorSummaryService.handleMonitorListSummary(summaryList);
     }
 
 

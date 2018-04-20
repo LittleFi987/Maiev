@@ -3,6 +3,7 @@ package com.ych.core.handler;
 import com.ych.core.common.Pagination;
 import com.ych.core.dto.ProjectDTO;
 import com.ych.core.enums.DeleteStatus;
+import com.ych.core.enums.project.ProjectStatus;
 import com.ych.core.model.MonitorProject;
 import com.ych.core.model.MonitorProjectUrl;
 import com.ych.core.service.ProjectService;
@@ -82,6 +83,19 @@ public class ProjectHandler {
         return projectDto;
     }
 
+    public void deleteById(Integer id) {
+        MonitorProject project = new MonitorProject();
+        project.setId(id);
+        project.setDeleteFlag(DeleteStatus.DELETED.getStatus());
+        projectService.update(project);
+    }
+
+    public void updateStatus(ProjectStatus status, Integer projectId) {
+        MonitorProject project = new MonitorProject();
+        project.setId(projectId);
+        project.setProjectStatus(status.getValue());
+        projectService.update(project);
+    }
 
 
 }

@@ -71,4 +71,47 @@ public class MonitorGroupServiceImpl implements MonitorGroupService {
         example.createCriteria().andProjectIdIn(list);
         return monitorGroupMapper.selectByExample(example);
     }
+
+    @Override
+    public List<MonitorGroup> listByProjectId(Integer projectId) {
+        MonitorGroupExample example = new MonitorGroupExample();
+        example.createCriteria().andProjectIdEqualTo(projectId);
+        return monitorGroupMapper.selectByExample(example);
+    }
+
+    @Override
+    public MonitorGroup getById(Integer id) {
+        MonitorGroupExample example = new MonitorGroupExample();
+        example.createCriteria().andIdEqualTo(id);
+        List<MonitorGroup> monitorGroups = monitorGroupMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(monitorGroups)) {
+            return null;
+        }
+        return monitorGroups.get(0);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void update(Integer groupId, List<Integer> itemIds, String groupName) {
+        MonitorGroup group = new MonitorGroup();
+        group.setId(groupId);
+        group.setUpdateTime(new Date());
+        group.setGroupName(groupName);
+        MonitorGroupItemExample example = new MonitorGroupItemExample();
+        example.createCriteria().andGroupIdEqualTo(groupId);
+        monitorGroupItemMapper.deleteByExample(example);
+        for (Integer itemId : itemIds) {
+            MonitorGroupItem monitorGroupItem = new MonitorGroupItem();
+            monitorGroupItem.setMonitorItemId(itemId);
+            monitorGroupItem.setGroupId(groupId);
+            monitorGroupItem.setCreateTime(new Date());
+            monitorGroupItem.setUpdateTime(new Date());
+            monitorGroupItemMapper.insertSelective(monitorGroupItem);
+        }
+    }
+
+    @Override
+    public void deleteByGroupId(Integer groupId) {
+        monitorGroupMapper.deleteByPrimaryKey(groupId);
+    }
 }

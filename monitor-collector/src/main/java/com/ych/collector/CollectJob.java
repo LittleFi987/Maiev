@@ -3,9 +3,11 @@ package com.ych.collector;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import com.ych.alert.Alert;
+import com.ych.core.enums.project.ProjectStatus;
 import com.ych.core.handler.ItemHandler;
 import com.ych.core.handler.MonitorSummaryHandler;
 import com.ych.core.handler.MonitorUrlHandler;
+import com.ych.core.handler.ProjectHandler;
 import com.ych.core.model.MonitorProjectUrl;
 import com.ych.core.model.MonitorSummary;
 import com.ych.monitor.bean.MonitorBean;
@@ -35,6 +37,9 @@ public class CollectJob {
     private ItemHandler itemHandler;
 
     @Resource
+    private ProjectHandler projectHandler;
+
+    @Resource
     private Alert alert;
 
     @Scheduled(fixedRate = 1000 * 30)
@@ -49,8 +54,10 @@ public class CollectJob {
             List<MonitorBean> monitorData = HttpClient.send(monitorProjectUrl.getMonitorUrl(), new TypeReference<List<MonitorBean>>() {});
             if (CollectionUtils.isEmpty(monitorData)) {
                 log.warn("[COLLECT-JOB] monitor data is null");
+                projectHandler.updateStatus(ProjectStatus.ERROR, monitorProjectUrl.getProjectId());
                 return;
             }
+            projectHandler.updateStatus(ProjectStatus.NORMAL, monitorProjectUrl.getProjectId());
             List<MonitorSummary> summaryList = Lists.newArrayList();
             for (MonitorBean bean : monitorData) {
                 MonitorSummary monitorSummary = new MonitorSummary();

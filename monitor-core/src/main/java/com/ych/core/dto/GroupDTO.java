@@ -39,9 +39,6 @@ public class GroupDTO implements Serializable {
         }
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public Integer getId() {
         return id;

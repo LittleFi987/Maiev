@@ -50,4 +50,21 @@ public class MonitorSummaryServiceImpl implements MonitorSummaryService {
         example.setOrderByClause("total_request_time desc limit 0,10");
         return monitorSummaryMapper.selectByExample(example);
     }
+
+    @Override
+    public List<MonitorSummary> listByMonitorName(String monitorName) {
+        MonitorSummaryExample example = new MonitorSummaryExample();
+        example.createCriteria().andMonitorNameEqualTo(monitorName);
+        example.setOrderByClause("id desc limit 0,5");
+        return monitorSummaryMapper.selectByExample(example);
+    }
+
+    @Override
+    public void handleMonitorListSummary(List<MonitorSummary> list) {
+        for (MonitorSummary monitorSummary : list) {
+            monitorSummary.setHandleFlag(HandleStatus.HANDLE.getValue());
+            monitorSummary.setUpdateTime(new Date());
+            monitorSummaryMapper.updateByPrimaryKeySelective(monitorSummary);
+        }
+    }
 }
