@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,5 +40,20 @@ public class AlarmSetServiceImpl implements AlarmSetService {
         AlarmSetExample alarmSetExample = new AlarmSetExample();
         alarmSetExample.createCriteria().andMonitorItemIdEqualTo(itemId).andDeleteFlagEqualTo(status.getStatus());
         return alarmSetMapper.selectByExample(alarmSetExample);
+    }
+
+    @Override
+    public void create(AlarmSet alarmSet) {
+        alarmSet.setCreateTime(new Date());
+        alarmSet.setUpdateTime(new Date());
+        alarmSet.setDeleteFlag(DeleteStatus.NORMAL.getStatus());
+        alarmSetMapper.insertSelective(alarmSet);
+    }
+
+    @Override
+    public List<AlarmSet> listByUserId(Integer userId, DeleteStatus status) {
+        AlarmSetExample example = new AlarmSetExample();
+        example.createCriteria().andUserIdEqualTo(userId).andDeleteFlagEqualTo(status.getStatus());
+        return alarmSetMapper.selectByExample(example);
     }
 }

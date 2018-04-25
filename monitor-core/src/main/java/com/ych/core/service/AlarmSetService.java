@@ -14,4 +14,8 @@ public interface AlarmSetService {
     List<AlarmSet> getByMonitorItemId(Integer itemId);
 
     List<AlarmSet> listByItemIdAndFlag(Integer itemId, DeleteStatus status);
+
+    void create(AlarmSet alarmSet);
+
+    List<AlarmSet> listByUserId(Integer userId, DeleteStatus status);
 }

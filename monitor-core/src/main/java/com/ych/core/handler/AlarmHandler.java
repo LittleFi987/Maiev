@@ -1,5 +1,6 @@
 package com.ych.core.handler;
 
+import com.ych.core.dto.AlarmParam;
 import com.ych.core.enums.DeleteStatus;
 import com.ych.core.model.AlarmSet;
 import com.ych.core.model.MonitorItem;
@@ -45,4 +46,16 @@ public class AlarmHandler {
             }
         }
     }
+
+
+    public void create(AlarmSet alarmSet) {
+        alarmSetService.create(alarmSet);
+    }
+
+    public List<AlarmSet> listByUserId(Integer userId) {
+        List<AlarmSet> alarmSets = alarmSetService.listByUserId(userId, DeleteStatus.NORMAL);
+        return alarmSets;
+    }
+
+
 }

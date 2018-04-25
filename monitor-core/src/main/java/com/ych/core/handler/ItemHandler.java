@@ -2,7 +2,9 @@ package com.ych.core.handler;
 
 import com.google.common.collect.Lists;
 import com.ych.core.common.Pagination;
+import com.ych.core.dto.AlarmItemDTO;
 import com.ych.core.dto.MonitorItemDTO;
+import com.ych.core.enums.DeleteStatus;
 import com.ych.core.enums.summary.HandleStatus;
 import com.ych.core.model.MonitorDetail;
 import com.ych.core.model.MonitorItem;
@@ -19,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by chenhao.ye on 18/03/2018.
@@ -96,6 +99,27 @@ public class ItemHandler {
         newPaging.setList(dtoList);
         newPaging.setTotalCount(paging.getTotalCount());
         return newPaging;
+    }
+
+    public List<AlarmItemDTO> listAll(Integer userId) {
+        List<MonitorProject> monitorProjects = projectService.listByUserId(userId, DeleteStatus.NORMAL);
+        if (CollectionUtils.isEmpty(monitorProjects)) {
+            return null;
+        }
+        List<Integer> projectIdList = monitorProjects.stream().map(MonitorProject::getId).collect(Collectors.toList());
+        List<AlarmItemDTO> list = Lists.newArrayList();
+        for (Integer id : projectIdList) {
+            List<MonitorItem> monitorItems = monitorItemService.listByProjectId(id);
+            if (CollectionUtils.isEmpty(monitorItems)) {
+                for (MonitorItem monitorItem : monitorItems) {
+                    AlarmItemDTO dto = new AlarmItemDTO();
+                    dto.setId(monitorItem.getId());
+                    dto.setName(monitorItem.getMonitorItemName());
+                    list.add(dto);
+                }
+            }
+        }
+        return list;
     }
 
 

@@ -146,6 +146,28 @@ public class GroupHandler {
     }
 
 
+    public List<AlarmItemDTO> listGroupByUserId(Integer userId) {
+        List<MonitorProject> monitorProjects = projectService.listByUserId(userId, DeleteStatus.NORMAL);
+        if (CollectionUtils.isEmpty(monitorProjects)) {
+            return null;
+        }
+        List<Integer> projectIdList = monitorProjects.stream().map(MonitorProject::getId).collect(Collectors.toList());
+        List<AlarmItemDTO> itemDTOS = Lists.newArrayList();
+        for (Integer id : projectIdList) {
+            List<MonitorGroup> monitorGroups = monitorGroupService.listByProjectId(id);
+            if (!CollectionUtils.isEmpty(monitorGroups)) {
+                for (MonitorGroup monitorGroup : monitorGroups) {
+                    AlarmItemDTO itemDTO = new AlarmItemDTO();
+                    itemDTO.setId(monitorGroup.getId());
+                    itemDTO.setName(monitorGroup.getGroupName());
+                    itemDTOS.add(itemDTO);
+                }
+            }
+        }
+        return itemDTOS;
+
+    }
+
     private List<MonitorItemDTO> listByProjectId(Integer projectId) {
         List<MonitorItem> monitorItems = monitorItemService.listByProjectId(projectId);
         List<MonitorItemDTO> itemDTOList = Lists.newArrayList();
