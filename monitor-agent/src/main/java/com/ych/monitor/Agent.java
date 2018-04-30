@@ -1,5 +1,6 @@
 package com.ych.monitor;
 
+import com.ych.monitor.collects.JdbcCommonCollect;
 import com.ych.monitor.collects.SpringControlCollect;
 import com.ych.monitor.collects.SpringServiceCollect;
 import com.ych.monitor.log.ILog;
@@ -28,7 +29,7 @@ public class Agent {
     public static void premain(String agentArgs, Instrumentation instrumentation) {
         log.info("------------->Maiev Agent Start<------------");
         collects = new Collect[]{SpringControlCollect.INSTANCE,
-                SpringServiceCollect.INSTANCE};
+                SpringServiceCollect.INSTANCE, JdbcCommonCollect.INSTANCE};
         instrumentation.addTransformer(new DefaultClassFileTransformer(collects));
 
     }

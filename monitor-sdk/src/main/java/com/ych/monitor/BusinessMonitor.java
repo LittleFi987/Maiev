@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Created by Stay on 2017/1/16  0:06.
  */
-public enum  BusinessMonitor {
+public enum BusinessMonitor {
     INSTANCE;
 
     private ConcurrentHashMap<String, MonitorBean> monitorMap = new ConcurrentHashMap<>();
@@ -46,7 +46,7 @@ public enum  BusinessMonitor {
         String countKey = null;
         for (Map.Entry<String, MonitorBean> entry : monitorMap.entrySet()) {
             countKey = entry.getKey();
-            map.put(countKey, getAndRemove(countKey,entry.getValue()));
+            map.put(countKey, getAndRemove(countKey, entry.getValue()));
         }
     }
 
@@ -58,10 +58,10 @@ public enum  BusinessMonitor {
      * @return
      */
     private MonitorBean getAndRemove(String key, MonitorBean value) {
-            while (!monitorMap.remove(key, value)) {
-                value = monitorMap.get(key);
-            }
-            return value;
+        while (!monitorMap.remove(key, value)) {
+            value = monitorMap.get(key);
+        }
+        return value;
     }
 
 
