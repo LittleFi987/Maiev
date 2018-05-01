@@ -1,10 +1,14 @@
 package com.ych.monitor.bean;
 
+import java.io.Serializable;
+
 /**
  * @Author yechenhao
  * @Date 29/04/2018
  */
-public abstract class AbstractContext {
+public class AbstractContext implements Serializable {
+
+    private static final long serialVersionUID = -5404182597326366899L;
 
     /**
      * 调用链唯一标识
@@ -45,5 +49,59 @@ public abstract class AbstractContext {
     private Long sr;
 
 
+    public String getTraceId() {
+        return traceId;
+    }
 
+    public void setTraceId(String traceId) {
+        this.traceId = traceId;
+    }
+
+    public String getSpanId() {
+        return spanId;
+    }
+
+    public void setSpanId(String spanId) {
+        this.spanId = spanId;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public Long getCs() {
+        return cs;
+    }
+
+    public void setCs(Long cs) {
+        this.cs = cs;
+    }
+
+    public Long getCr() {
+        return cr;
+    }
+
+    public void setCr(Long cr) {
+        this.cr = cr;
+    }
+
+    public Long getSs() {
+        return ss;
+    }
+
+    public void setSs(Long ss) {
+        this.ss = ss;
+    }
+
+    public Long getSr() {
+        return sr;
+    }
+
+    public void setSr(Long sr) {
+        this.sr = sr;
+    }
 }

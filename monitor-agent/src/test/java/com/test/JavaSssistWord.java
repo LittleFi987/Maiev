@@ -9,10 +9,13 @@ public class JavaSssistWord {
 
     public static void main(String[] args) throws NotFoundException, CannotCompileException, IllegalAccessException, InstantiationException {
         ClassPool pool = new ClassPool();
+        // 插入类路径  通过类路径去搜索我们要的类
         pool.insertClassPath(new LoaderClassPath(IHello.class.getClassLoader()));
 
+        // 构建一个新的CtClass对象
         CtClass ctClass = pool.makeClass("com.test.Hello1");
 
+        // 实现一个接口
         ctClass.addInterface(pool.get(IHello.class.getName()));
         CtClass returnType = pool.get(void.class.getName());
 
