@@ -127,6 +127,12 @@ public class JdbcCommonCollect extends AbstractCollectors implements Collect {
         return (PreparedStatement)o;
     }
 
+    /**
+     * 代理connection
+     *
+     * @param connection
+     * @return
+     */
     public Connection proxyConnection(final Connection connection) {
         Object o = Proxy.newProxyInstance(JdbcCommonCollect.class.getClassLoader(), new Class[]{Connection.class}, new ConnectionHandler(connection));
         return (Connection)o;
