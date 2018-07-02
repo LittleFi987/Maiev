@@ -4,7 +4,6 @@
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collects/SpringServiceCollect.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collects/SpringControlCollect.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/SystemOutWriter.java
-/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/bean/BaseMonitor.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collects/core/MonitorTrack.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/core/WriterFactory.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/ILog.java
@@ -15,6 +14,7 @@
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/bean/WebStatistics.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/package-info.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collects/JdbcCommonCollect.java
+/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/constant/IdWorkerConstant.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/AgentLoader.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/core/FileWriter.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/collects/api/TransformMaker.java
@@ -33,4 +33,6 @@
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/AbstractCollectors.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/core/EasyLogger.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/log/EasyLogResolver.java
+/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/bean/TraceContext.java
 /Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/conf/Config.java
+/Users/chenhaoye/IdeaProjects/monitor/monitor-agent/src/main/java/com/ych/monitor/util/IdWorker.java

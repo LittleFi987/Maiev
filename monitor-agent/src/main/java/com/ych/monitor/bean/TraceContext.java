@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @Author yechenhao
  * @Date 29/04/2018
  */
-public class AbstractContext implements Serializable {
+public class TraceContext implements Serializable {
 
     private static final long serialVersionUID = -5404182597326366899L;
 
