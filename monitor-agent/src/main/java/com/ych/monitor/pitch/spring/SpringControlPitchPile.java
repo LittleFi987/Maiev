@@ -1,41 +1,39 @@
-package com.ych.monitor.collects;
+package com.ych.monitor.pitch.spring;
 
-import com.ych.monitor.AbstractCollectors;
 import com.ych.monitor.AgentLoader;
-import com.ych.monitor.Collect;
-import com.ych.monitor.bean.Statistics;
-import com.ych.monitor.bean.WebStatistics;
 import com.ych.monitor.collects.api.TransformMaker;
 import com.ych.monitor.collects.core.SpringControlMaker;
+import com.ych.monitor.interceptor.MethodsAroundInterceptor;
+import com.ych.monitor.pitch.AbstractPitchPile;
 import javassist.CtClass;
 import javassist.CtMethod;
 
 /**
- * Created by chenhao.ye on 12/03/2018.
+ * @author chenhao.ych
+ * @date 2018-09-15
  */
-public class SpringControlCollect extends AbstractCollectors implements Collect {
+public class SpringControlPitchPile extends AbstractPitchPile {
 
-    public static SpringControlCollect INSTANCE = new SpringControlCollect();
-
+    public SpringControlPitchPile(MethodsAroundInterceptor interceptor, String methodName, String returnTypeName) {
+        super(interceptor, methodName, returnTypeName);
+    }
 
     @Override
     public boolean isTarget(String className, ClassLoader classLoader, CtClass ctClass) {
         try {
             for (Object o : ctClass.getAnnotations()) {
-                if (o.toString().startsWith("@org.springframework.stereotype.Controller") ||
-                        o.toString().startsWith("@org.springframework.web.bind.annotation.RestController")) {
+                if (o.toString().startsWith("@org.springframework.stereotype.Service")) {
                     return true;
                 }
             }
         } catch (ClassNotFoundException e) {
-
+            System.out.println(e.getMessage());
         }
         return false;
     }
 
     @Override
     public byte[] transform(ClassLoader loader, String className, byte[] classfileBuffer, CtClass ctClass) throws Exception {
-
         AgentLoader agentLoader = new AgentLoader(className, loader, ctClass);
         String classRequestUrl = getRequestMappingValue(ctClass);
         for (CtMethod ctMethod : ctClass.getDeclaredMethods()) {
@@ -49,39 +47,22 @@ public class SpringControlCollect extends AbstractCollectors implements Collect 
             if (requestUrl == null) {
                 continue;
             }
-//            agentLoader.updateMethod(ctMethod, build);
+
+            agentLoader.updateMethod(ctMethod, buildSrc());
         }
         return agentLoader.toBytecode();
-    }
-
-
-    @Override
-    public Statistics begin(String className, String method) {
-        WebStatistics statistics = new WebStatistics(super.begin(className, method));
-        statistics.setLogType("control");
-        return statistics;
-    }
-
-    @Override
-    public void end(Statistics statistics) {
-        super.end(statistics);
-    }
-
-    @Override
-    public void sendStatistics(Statistics statistics) {
-
     }
 
 
     private String getRequestMappingValue(CtMethod method) throws ClassNotFoundException {
         String val = "";
         for (Object o : method.getAnnotations()) {
-           if (o.toString().startsWith("@org.springframework.web.bind.annotation.RequestMapping") ||
-                   o.toString().startsWith("@org.springframework.web.bind.annotation.GetMapping") ||
-                   o.toString().startsWith("@org.springframework.web.bind.annotation.PostMapping")) {
-               val = val + getAnnotationValue("value", o.toString());
-               return val == null ? "/" : val;
-           }
+            if (o.toString().startsWith("@org.springframework.web.bind.annotation.RequestMapping") ||
+                    o.toString().startsWith("@org.springframework.web.bind.annotation.GetMapping") ||
+                    o.toString().startsWith("@org.springframework.web.bind.annotation.PostMapping")) {
+                val = val + getAnnotationValue("value", o.toString());
+                return val == null ? "/" : val;
+            }
         }
         return null;
     }
